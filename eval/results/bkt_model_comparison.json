@@ -1,0 +1,15 @@
+{
+  "dataset": "Simulated Learner Sequences (ASSISTments Skill-Builder Standard Format)",
+  "num_interactions": 1000,
+  "models": {
+    "BKT": {
+      "auc": 0.7,
+      "log_loss": 0.467
+    },
+    "RunningAverage": {
+      "auc": 0.628,
+      "log_loss": 2.142
+    }
+  },
+  "auc_improvement_pct": 11.5
+}

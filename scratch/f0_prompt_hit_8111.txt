@@ -1,0 +1,23 @@
+Created At: 2026-10-10T18:32:47+05:30
+Completed At: 2026-10-10T18:32:51+05:30
+
+The command exited with code 0.
+Output:
+[Test] 2026-10-10 00:00:01 -> Days Left: 15
+[Test] 2026-10-10 23:59:59 -> Days Left: 15
+[Test] Before midnight (Oct 10 23:59:59): 15 days
+[Test] After midnight (Oct 11 00:00:01): 14 days
+▶ Date Bug: Midnight stability and local date consistency
+  ✔ shows identical days left at 00:00:01 and 23:59:59 on the same local day (4.0886ms)
+  ✔ properly decrements by 1 immediately after midnight crossing (0.5681ms)
+  ✔ handles exam day (0 days) and past dates properly (0.3591ms)
+✔ Date Bug: Midnight stability and local date consistency (7.644ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 199.0287
+

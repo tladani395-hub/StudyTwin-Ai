@@ -1,0 +1,32 @@
+[
+  {
+    "student": "Student A (Strong)",
+    "initial_mastery": 0.72,
+    "session_1": 0.98,
+    "session_2": 0.98,
+    "session_3": 0.98,
+    "final_mastery": 0.98,
+    "gain": "+26.0%",
+    "gain_val": 0.26
+  },
+  {
+    "student": "Student B (Average)",
+    "initial_mastery": 0.5,
+    "session_1": 0.98,
+    "session_2": 0.98,
+    "session_3": 0.98,
+    "final_mastery": 0.98,
+    "gain": "+48.0%",
+    "gain_val": 0.48
+  },
+  {
+    "student": "Student C (Weak)",
+    "initial_mastery": 0.28,
+    "session_1": 0.98,
+    "session_2": 0.98,
+    "session_3": 0.98,
+    "final_mastery": 0.98,
+    "gain": "+70.0%",
+    "gain_val": 0.7
+  }
+]

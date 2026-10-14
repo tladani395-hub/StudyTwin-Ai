@@ -1,0 +1,19 @@
+# Data Structures & Algorithms Textbook (Sample Excerpts)
+
+## Page 142: Binary Search Invariants and Proof of Logarithmic Bound
+Binary search repeatedly divides a sorted search space into smaller halves. Given a sorted array A of length n and a target value x, we maintain two pointer invariants: low and high. At each iteration, we evaluate mid = low + (high - low) / 2.
+- If A[mid] == x, return mid.
+- If A[mid] < x, the target cannot exist in indices <= mid; set low = mid + 1.
+- If A[mid] > x, the target cannot exist in indices >= mid; set high = mid - 1.
+
+Recurrence relation: T(n) = T(n/2) + O(1) => T(n) = O(log2 n).
+
+---
+
+## Page 153: Binary Search Trees & Diagram Properties
+A Binary Search Tree (BST) is a hierarchical node-based structure where for every node N:
+1. Every key in Left(N) < N.key
+2. Every key in Right(N) > N.key
+
+[Diagram Analysis: Binary Search Tree]
+Visual structure: Root node contains key 50. Left subtree contains keys {25, 10, 35} (all < 50), and right subtree contains keys {75, 60, 90} (all > 50). In-order traversal yields sorted order: [10, 25, 35, 50, 60, 75, 90]. Subtree height is 3, satisfying BST search invariant O(log n).

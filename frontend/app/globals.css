@@ -1,0 +1,152 @@
+@import '../styles/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: var(--bg-app, #121614);
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--bg-app, #121614);
+    color: var(--text-main, #E8EEEA);
+    font-family: var(--font-sans), var(--font-body), system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans), var(--font-heading), system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.025em;
+  }
+
+  /* Explorer Mode minimum body text size (18px) and playful font handling */
+  [data-mode="explorer"] {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  [data-mode="explorer"] body {
+    font-family: 'Nunito', 'Quicksand', var(--font-sans), system-ui, sans-serif;
+  }
+
+  [data-mode="explorer"] h1,
+  [data-mode="explorer"] h2,
+  [data-mode="explorer"] h3,
+  [data-mode="explorer"] h4 {
+    font-family: 'Baloo 2', 'Fredoka', cursive, var(--font-sans), system-ui, sans-serif;
+    letter-spacing: normal;
+  }
+
+  /* Scholar Mode clean typographic scale with Plus Jakarta Sans */
+  [data-mode="scholar"] {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  [data-mode="scholar"] body {
+    font-family: var(--font-sans), var(--font-inter), system-ui, sans-serif;
+  }
+
+  [data-mode="scholar"] h1,
+  [data-mode="scholar"] h2,
+  [data-mode="scholar"] h3 {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* View Transitions API Custom Circular Reveal */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 999;
+}
+
+/* 3D Button Ripple Effect */
+.color-ripple {
+  position: fixed;
+  border-radius: 50%;
+  transform: scale(0);
+  background: radial-gradient(circle, var(--primary) 0%, rgba(255,255,255,0.4) 40%, transparent 70%);
+  animation: ripple-expand 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes ripple-expand {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Keyframes for Mascot & Motion */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { filter: drop-shadow(0 0 12px var(--primary-glow)); }
+  50% { filter: drop-shadow(0 0 24px var(--primary-glow)); }
+}
+
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

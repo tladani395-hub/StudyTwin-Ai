@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" fill="none">
+  <defs>
+    <!-- Coral to Purple Brand Gradient -->
+    <linearGradient id="aanviMascotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B57" />
+      <stop offset="50%" stop-color="#9B6EFF" />
+      <stop offset="100%" stop-color="#7B4BFF" />
+    </linearGradient>
+
+    <!-- Antenna Left Gradient (Coral Dominant) -->
+    <linearGradient id="antGradLeft" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF6B57" />
+      <stop offset="70%" stop-color="#FF8A7A" />
+      <stop offset="100%" stop-color="#FFD166" />
+    </linearGradient>
+
+    <!-- Antenna Right Gradient (Purple Dominant) -->
+    <linearGradient id="antGradRight" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#7B4BFF" />
+      <stop offset="70%" stop-color="#9B6EFF" />
+      <stop offset="100%" stop-color="#FF85A1" />
+    </linearGradient>
+
+    <!-- Soft Cheek Gradient -->
+    <radialGradient id="cheekGlowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF85A1" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#FF6285" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#FF6285" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Deep Velvet Body Fill Gradient -->
+    <radialGradient id="velvetBodyGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#24173F" stop-opacity="0.94" />
+      <stop offset="65%" stop-color="#150E28" stop-opacity="0.97" />
+      <stop offset="100%" stop-color="#0E091B" stop-opacity="0.99" />
+    </radialGradient>
+
+    <!-- Sparkle Cross Gradient -->
+    <radialGradient id="sparkleGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#FFE082" />
+      <stop offset="100%" stop-color="#FFD166" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Outer Aura Glow Filter -->
+    <filter id="aanviAuraGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur1" />
+      <feGaussianBlur stdDeviation="6" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Winged Moth-Like Shield Body (Dark Velvet Fill) -->
+  <path
+    d="M 500 240
+       C 410 240, 260 320, 200 440
+       C 150 540, 160 670, 270 760
+       C 350 825, 430 790, 500 710
+       C 570 790, 650 825, 730 760
+       C 840 670, 850 540, 800 440
+       C 740 320, 590 240, 500 240 Z"
+    fill="url(#velvetBodyGrad)"
+  />
+
+  <!-- Wing Inset Facet Shading Lines -->
+  <path
+    d="M 280 560 Q 380 620 480 660"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-opacity="0.25"
+  />
+  <path
+    d="M 720 560 Q 620 620 520 660"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-opacity="0.25"
+  />
+
+  <!-- Crossing Arrow-Tipped Antennae -->
+  <!-- Left Antenna: curves up from left neck, crosses center, heads up-right -->
+  <path
+    d="M 470 250
+       C 460 190, 480 150, 530 115
+       L 600 65"
+    stroke="url(#antGradLeft)"
+    stroke-width="24"
+    stroke-linecap="round"
+    filter="url(#aanviAuraGlow)"
+  />
+  <!-- Left Antenna Arrowhead (Points Up-Right) -->
+  <polygon
+    points="600,45 615,85 575,70"
+    fill="url(#antGradLeft)"
+    stroke="url(#antGradLeft)"
+    stroke-width="6"
+    stroke-linejoin="round"
+    filter="url(#aanviAuraGlow)"
+  />
+
+  <!-- Right Antenna: curves up from right neck, crosses center, heads up-left -->
+  <path
+    d="M 530 250
+       C 540 190, 520 150, 470 115
+       L 400 65"
+    stroke="url(#antGradRight)"
+    stroke-width="24"
+    stroke-linecap="round"
+    filter="url(#aanviAuraGlow)"
+  />
+  <!-- Right Antenna Arrowhead (Points Up-Left) -->
+  <polygon
+    points="400,45 385,85 425,70"
+    fill="url(#antGradRight)"
+    stroke="url(#antGradRight)"
+    stroke-width="6"
+    stroke-linejoin="round"
+    filter="url(#aanviAuraGlow)"
+  />
+
+  <!-- Antenna Sparkle Stars (Picture 2: Twinkles floating off tips) -->
+  <!-- Right-top sparkle (near right arrowhead) -->
+  <g transform="translate(630, 45) scale(0.7)">
+    <path d="M 0 -22 Q 0 0 -22 0 Q 0 0 0 22 Q 0 0 22 0 Q 0 0 0 -22 Z" fill="#FFE27A" filter="url(#aanviAuraGlow)" />
+    <circle cx="0" cy="0" r="4" fill="#FFFFFF" />
+  </g>
+  <!-- Left-top sparkle (near left arrowhead) -->
+  <g transform="translate(370, 45) scale(0.7)">
+    <path d="M 0 -22 Q 0 0 -22 0 Q 0 0 0 22 Q 0 0 22 0 Q 0 0 0 -22 Z" fill="#FFE27A" filter="url(#aanviAuraGlow)" />
+    <circle cx="0" cy="0" r="4" fill="#FFFFFF" />
+  </g>
+  <!-- Extra cute floating sparkle -->
+  <g transform="translate(500, 20) scale(0.5)">
+    <path d="M 0 -22 Q 0 0 -22 0 Q 0 0 0 22 Q 0 0 22 0 Q 0 0 0 -22 Z" fill="#FFF8E7" filter="url(#aanviAuraGlow)" />
+  </g>
+
+  <!-- Moth-Like Body & Wings Outline (Coral to Purple Glowing Tube) -->
+  <path
+    d="M 500 240
+       C 410 240, 260 320, 200 440
+       C 150 540, 160 670, 270 760
+       C 350 825, 430 790, 500 710
+       C 570 790, 650 825, 730 760
+       C 840 670, 850 540, 800 440
+       C 740 320, 590 240, 500 240 Z"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="32"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#aanviAuraGlow)"
+  />
+
+  <!-- Soft Pink Cheek Dots -->
+  <circle cx="340" cy="500" r="38" fill="url(#cheekGlowGrad)" />
+  <circle cx="660" cy="500" r="38" fill="url(#cheekGlowGrad)" />
+
+  <!-- Picture 2: Joyful Arched Happy Eyes (^ ^ / ⌒ ⌒) with Specular Catch-lights -->
+  <!-- Left Happy Eye Arc -->
+  <path
+    d="M 370 415 C 400 360, 450 360, 480 415"
+    stroke="#FFD166"
+    stroke-width="20"
+    stroke-linecap="round"
+    fill="none"
+    filter="url(#aanviAuraGlow)"
+  />
+  <circle cx="425" cy="385" r="7" fill="#FFFFFF" />
+
+  <!-- Right Happy Eye Arc -->
+  <path
+    d="M 520 415 C 550 360, 600 360, 630 415"
+    stroke="#FFD166"
+    stroke-width="20"
+    stroke-linecap="round"
+    fill="none"
+    filter="url(#aanviAuraGlow)"
+  />
+  <circle cx="575" cy="385" r="7" fill="#FFFFFF" />
+
+  <!-- Picture 2: Warm Broad Smile Line (◡) -->
+  <path
+    d="M 440 520 Q 500 580 560 520"
+    stroke="#FFB800"
+    stroke-width="16"
+    stroke-linecap="round"
+    fill="none"
+    filter="url(#aanviAuraGlow)"
+  />
+</svg>

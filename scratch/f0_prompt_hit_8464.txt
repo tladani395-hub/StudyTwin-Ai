@@ -1,0 +1,49 @@
+Created At: 2026-10-10T19:09:56+05:30
+Completed At: 2026-10-10T19:09:57+05:30
+File Path: `file:///d:/StudyTwin-AI/frontend/app/courses/page.tsx`
+Total Lines: 884
+Total Bytes: 40583
+Showing lines 320 to 360
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+320:                     </span>
+321:                     <span className="text-xs font-bold text-text-main truncate">{cl.name}</span>
+322:                   </div>
+323:                   <p className="text-[10px] text-text-muted mt-1 truncate">
+324:                     Instructor: {cl.teacher_name || 'Faculty Lead'}
+325:                   </p>
+326:                 </div>
+327:                 <span className="text-[10px] font-mono font-semibold text-text-muted shrink-0">
+328:                   {cl.member_count || 1} {cl.member_count === 1 ? 'member' : 'members'}
+329:                 </span>
+330:               </div>
+331:             ))}
+332:           </div>
+333:         </div>
+334:       )}
+335: 
+336:       {/* Course Cards Grid */}
+337:       {courses.length > 0 && (
+338:         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+339:           {courses.map((course) => {
+340:             const bktPct = course.bkt_mastery_pct || 0;
+341:             const dueCount = course.due_reviews_count || 0;
+342:             const progressPct = course.progress_pct || 0;
+343:             const isActive = course.id === activeCourseId;
+344: 
+345:             // Calculate days left to exam using shared local date function
+346:             const daysLeft: number | null = course.exam_date ? computeDaysLeft(course.exam_date) : null;
+347: 
+348:             return (
+349:               <motion.div
+350:                 key={course.id}
+351:                 whileHover={{ y: -2 }}
+352:                 className={`p-5 sm:p-6 rounded-card bg-bg-surface border shadow-card flex flex-col justify-between transition-all ${
+353:                   isActive
+354:                     ? 'ring-2 ring-primary/40 border-primary'
+355:                     : isExplorer
+356:                     ? 'border-[#FF6B57]/30 hover:border-[#FF6B57]'
+357:                     : 'border-border-subtle hover:border-primary'
+358:                 }`}
+359:               >
+360:                 <div className="space-y-4">
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

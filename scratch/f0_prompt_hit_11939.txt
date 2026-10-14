@@ -1,0 +1,31 @@
+<USER_REQUEST>
+Drafting guidance on missing items before advancing to the next part.
+Not yet. This report covers only the three extra items I added: the owl removal, the render cost and the visual comparison. It doesn’t contain the main Part F0 results, and those are the ones that decide whether Part F can be trusted. Still missing:
+
+the reality audit table (which of embeddings, LLM, ASR, OCR, reranker and moderation are real and which are stubbed), and why the backend tests finish in 2.9 seconds
+the real Hindi and Gujarati PDFs (not self-generated), with units, concepts, and the two cross-language questions
+real progress from actual work done, plus a real failure
+404 instead of 403 for other users’ courses, and the UUID check
+deletion proof (row counts before and after, files and vectors)
+the new Playwright journeys (add, switch and archive a course, and a rolled-back failed write)
+the same “days left” screenshot
+Either the AI skipped them, or you pasted only the extras. If you pasted the full F0, ask it to print results for each numbered item and not just the extras. If you didn’t, paste it now without item 7.
+
+What the report does show:
+
+The owl is gone. The Explorer heading now uses the Aanvi logo, and the report says the code search found 0 owl references.
+The render times are only a rough guide. They are 0.74 to 1.96 ms, but the lower particle counts (Medium, Low) are slower than High, which doesn’t make sense for a real measurement. Timing around the render call usually captures only the time to submit the work, not the GPU’s time to draw it. The real test is still your own laptop and phone.
+The visuals did change. The comparison differences of 17.5 to 22.4 at 5.2 to 7.0 seconds are large. The report says the 3D “Aanvi” text had flattened into 2D white planes, and it restored the extruded letters in a warm champagne gold (0xfaecd8). That is not the coral-to-purple gradient we planned, and there is no new before-versus-after comparison for the restored version. Attach the new video so I can check it. If you prefer the coral-to-purple letters, tell the AI.
+The sound and routes are fine. Peak -2.14 dBFS, RMS -16.24 dBFS, 13 of 13 tests and 34 of 34 routes pass. The 3D chunk is 144 KB gzipped, within budget.
+After the real F0 results are in, run Part F in four parts, because it is very large. Paste the Part F text from my earlier message each time and tell the AI which items to do:
+
+Run	Items	What it covers
+F1	1, 2 and 7	UI translation files, language choice and fonts
+F2	3 and 4	Answers in the user’s language, and cross-language retrieval
+F3	5 and 6	Voice and camera in three languages, and safety in three languages
+F4	8 and 9	Hindi and Gujarati evaluation, and the proof screenshots
+Send me the F0 report once it contains the numbered results, and I’ll check it before you start F1.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-11T11:01:01+05:30.
+</ADDITIONAL_METADATA>

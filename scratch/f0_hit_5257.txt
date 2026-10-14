@@ -1,0 +1,63 @@
+# Resuming from a compaction
+
+You are continuing work on the task described above, but you have lost access to the full conversation history, and need to resume work efficiently using the progress summary below:
+
+# User Requests
+The following were user requests from the truncated conversation in chronological order:
+1. i want when first aniamtion when i open website first i see aanvi animation after that open website
+2. Error: Text content does not match server-rendered HTML.
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+
+Call Stack
+React
+checkForUnmatchedText
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (32797:1)
+didNotMatchHydratedTextInstance
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (36222:1)
+prepareToHydrateHostTextInstance
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (7288:1)
+completeWork
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (19821:1)
+completeUnitOfWork
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (25963:1)
+performUnitOfWork
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (25759:1)
+workLoopConcurrent
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (25734:1)
+renderRootConcurrent
+node_modules\next\dist\compiled\react-dom\cjs\react-dom.development.js (25690:1)
+performConcurrentWorkOnRoo
+<truncated 399 bytes>
+3. soory but i can't see aniamtion
+4. AANVI: FULL FLOW, AUTH, POSTGRESQL, COURSES AND 3 LANGUAGES
+
+Do NOT rebuild what works. Patch part by part. After each part: run the app, test at 1280px, 768px and 390px in both modes, and show proof (terminal output and screenshot paths). No fake data. If something can’t be done for real, say so.
+
+PART A: THE INTRO MUST ALWAYS PLAY FIRST
+Find why the intro does not show. Check: a localStorage “seen” flag, a route guard redirecting to /login first, a lazy-load error, or the reduced-motion fallback being triggered by mistake. Report the real cause.
+The intro is the first screen on every app start and every full page reload, before any auth check or redirect. It plays in full (about 5 seconds): particles gather into the logo, the outline draws, color fills, “Aanvi” appears letter by letter, the tagline fades in, sparkles burst, then it moves to the next screen.
+Skip button after 1 second, sound toggle (muted by default), and a reduced-motion version (a static logo fade, 1.5s). Remove “once per de
+<truncated 9841 bytes>
+5. PART A2: REAL 3D INTRO WITH SOUND (replaces the 2D SVG intro)
+
+Do NOT rebuild the rest of the app. Replace only the intro. The current intro is 2D SVG and muted by default, which is not what I want. I want a cinematic 3D WebGL animation with sound. Show proof after each step.
+
+STEP 1: Enter screen (this unlocks sound)
+On every app start and full reload, show a minimal “Enter” screen first. It has the Aanvi mark, a big “Tap to begin” button, and a small choice: 🔊 Sound on (default) / 🔇 Sound off.
+The tap is the user gesture that creates and resumes the AudioContext. Without it, browsers block audio.
+While the user decides, preload the 3D chunk, the fonts and the audio. The intro must start instantly after the tap.
+Save the sound choice to user_settings (and localStorage for logged-out users). On later visits, still show the Enter screen (browsers require the tap), but pre-select the saved choice.
+Text on this screen is translated (English, हिन्दी, ગુજરાતી), using the 
+<truncated 9973 bytes>
+6. PS D:\StudyTwin-AI\frontend> npm run dev
+
+> studytwin-frontend@1.0.0 dev
+> next dev -p 3000
+
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+    at listenInCluster (node:net:2437:12)
+    at Server.listen (node:net:2562:7)
+    at D:\StudyTwin-AI\frontend\node_modules\next\dist\server\lib\start-server.js:280:16
+    at new Promise (<anonymo

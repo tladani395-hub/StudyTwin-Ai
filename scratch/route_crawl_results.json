@@ -1,0 +1,308 @@
+[
+  {
+    "name": "Home Landing",
+    "path": "/",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Meet Aanvi"
+  },
+  {
+    "name": "Welcome Screen",
+    "path": "/welcome",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Welcome to Aanvi"
+  },
+  {
+    "name": "Login Screen",
+    "path": "/login",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Sign In to Aanvi"
+  },
+  {
+    "name": "Sign Up Screen",
+    "path": "/signup",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Create Your Study Account"
+  },
+  {
+    "name": "Architecture Overview",
+    "path": "/architecture",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Pipeline Architecture & Data Contracts"
+  },
+  {
+    "name": "Brand Intro Animation",
+    "path": "/intro",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Aanvi Brand Intro"
+  },
+  {
+    "name": "Forgot Password",
+    "path": "/forgot-password",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Reset Your Password"
+  },
+  {
+    "name": "Reset Password",
+    "path": "/reset-password",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Reset Your Password"
+  },
+  {
+    "name": "Privacy Policy",
+    "path": "/privacy",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Privacy Policy & Child Safety Protocol"
+  },
+  {
+    "name": "Terms of Service",
+    "path": "/terms",
+    "category": "Logged-Out (Public)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Aanvi Terms of Service"
+  },
+  {
+    "name": "Adventure Map (Dashboard)",
+    "path": "/dashboard",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Adventure World: Island Archipelago"
+  },
+  {
+    "name": "Spark Tutor",
+    "path": "/tutor",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Aanvi Source-Grounded Tutor"
+  },
+  {
+    "name": "Star Quiz (Assessment)",
+    "path": "/assessment",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Verified Course Assessments"
+  },
+  {
+    "name": "My Courses",
+    "path": "/courses",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "My Classes & Courses"
+  },
+  {
+    "name": "Space Galaxy (Knowledge Map)",
+    "path": "/knowledge-map",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Curriculum Knowledge Map"
+  },
+  {
+    "name": "Camera Doubt Solver",
+    "path": "/camera-doubt",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Multimodal Doubt & Feynman Studio"
+  },
+  {
+    "name": "Concept Flashcards",
+    "path": "/flashcards",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Course Concept Flashcards"
+  },
+  {
+    "name": "Parent Zone",
+    "path": "/parent-zone",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Parent & Guardian Zone"
+  },
+  {
+    "name": "Achievements & Quests",
+    "path": "/achievements",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Achievements & Quests"
+  },
+  {
+    "name": "Explorer AI Safety & Evaluation",
+    "path": "/evaluation",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "How Aanvi Makes Sure It's Always Smart &"
+  },
+  {
+    "name": "Explorer Settings",
+    "path": "/settings",
+    "category": "Logged-In (Explorer Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Settings & Preferences"
+  },
+  {
+    "name": "Scholar Dashboard",
+    "path": "/dashboard",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Welcome back, Demo Scholar"
+  },
+  {
+    "name": "Source-Grounded Tutor",
+    "path": "/tutor",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Aanvi Source-Grounded Tutor"
+  },
+  {
+    "name": "Adaptive Assessments",
+    "path": "/assessment",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Verified Course Assessments"
+  },
+  {
+    "name": "Results & BKT Feedback",
+    "path": "/results",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Performance & Misconception Review"
+  },
+  {
+    "name": "Course Galaxy Map",
+    "path": "/knowledge-map",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Curriculum Knowledge Map"
+  },
+  {
+    "name": "Spaced Schedule Planner",
+    "path": "/study-plan",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Adaptive Study Planner"
+  },
+  {
+    "name": "Courses & Material",
+    "path": "/courses",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "My Classes & Courses"
+  },
+  {
+    "name": "Multimodal Upload",
+    "path": "/upload",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Upload Course Material"
+  },
+  {
+    "name": "RAGAS Evaluation",
+    "path": "/evaluation",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "System Benchmark & Quality Evaluation"
+  },
+  {
+    "name": "Camera Doubt Proof Solver",
+    "path": "/camera-doubt",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Multimodal Doubt & Feynman Studio"
+  },
+  {
+    "name": "Flashcard Mastery",
+    "path": "/flashcards",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Course Concept Flashcards"
+  },
+  {
+    "name": "Achievements & Badges",
+    "path": "/achievements",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Achievements & Quests"
+  },
+  {
+    "name": "Scholar Settings",
+    "path": "/settings",
+    "category": "Logged-In (Scholar Mode)",
+    "status": 200,
+    "is404": false,
+    "renderedContent": true,
+    "headingSnippet": "Settings & Preferences"
+  }
+]

@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" fill="none">
+  <defs>
+    <!-- Coral to Purple Brand Gradient -->
+    <linearGradient id="aanviMascotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B57" />
+      <stop offset="50%" stop-color="#9B6EFF" />
+      <stop offset="100%" stop-color="#7B4BFF" />
+    </linearGradient>
+
+    <!-- Antenna Left Gradient (Coral Dominant) -->
+    <linearGradient id="antGradLeft" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF6B57" />
+      <stop offset="70%" stop-color="#FF8A7A" />
+      <stop offset="100%" stop-color="#FFD166" />
+    </linearGradient>
+
+    <!-- Antenna Right Gradient (Purple Dominant) -->
+    <linearGradient id="antGradRight" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#7B4BFF" />
+      <stop offset="70%" stop-color="#9B6EFF" />
+      <stop offset="100%" stop-color="#FF85A1" />
+    </linearGradient>
+
+    <!-- Glowing Orb Radial Gradient -->
+    <radialGradient id="orbGlowGrad" cx="45%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFF9E6" />
+      <stop offset="30%" stop-color="#FFD166" />
+      <stop offset="60%" stop-color="#FF9500" />
+      <stop offset="100%" stop-color="#FF5038" />
+    </radialGradient>
+
+    <!-- Soft Cheek Gradient -->
+    <radialGradient id="cheekGlowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF85A1" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#FF6285" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#FF6285" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Deep Velvet Body Fill Gradient -->
+    <radialGradient id="velvetBodyGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#24173F" stop-opacity="0.94" />
+      <stop offset="65%" stop-color="#150E28" stop-opacity="0.97" />
+      <stop offset="100%" stop-color="#0E091B" stop-opacity="0.99" />
+    </radialGradient>
+
+    <!-- Outer Aura Glow Filter -->
+    <filter id="aanviAuraGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur1" />
+      <feGaussianBlur stdDeviation="6" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="orbCoreGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="22" result="orbBlur" />
+      <feMerge>
+        <feMergeNode in="orbBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Winged Moth-Like Shield Body -->
+  <path
+    d="M 500 240
+       C 410 240, 260 320, 200 440
+       C 150 540, 160 670, 270 760
+       C 350 825, 430 790, 500 710
+       C 570 790, 650 825, 730 760
+       C 840 670, 850 540, 800 440
+       C 740 320, 590 240, 500 240 Z"
+    fill="url(#velvetBodyGrad)"
+  />
+
+  <!-- Wing Inset Facet Shading Lines -->
+  <path
+    d="M 280 560 Q 380 620 480 660"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-opacity="0.25"
+  />
+  <path
+    d="M 720 560 Q 620 620 520 660"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-opacity="0.25"
+  />
+
+  <!-- Crossing Arrow-Tipped Antennae -->
+  <path
+    d="M 470 250
+       C 460 190, 480 150, 530 115
+       L 600 65"
+    stroke="url(#antGradLeft)"
+    stroke-width="24"
+    stroke-linecap="round"
+    filter="url(#aanviAuraGlow)"
+  />
+  <polygon
+    points="600,45 615,85 575,70"
+    fill="url(#antGradLeft)"
+    stroke="url(#antGradLeft)"
+    stroke-width="6"
+    stroke-linejoin="round"
+    filter="url(#aanviAuraGlow)"
+  />
+
+  <path
+    d="M 530 250
+       C 540 190, 520 150, 470 115
+       L 400 65"
+    stroke="url(#antGradRight)"
+    stroke-width="24"
+    stroke-linecap="round"
+    filter="url(#aanviAuraGlow)"
+  />
+  <polygon
+    points="400,45 385,85 425,70"
+    fill="url(#antGradRight)"
+    stroke="url(#antGradRight)"
+    stroke-width="6"
+    stroke-linejoin="round"
+    filter="url(#aanviAuraGlow)"
+  />
+
+  <!-- Moth-Like Body & Wings Outline -->
+  <path
+    d="M 500 240
+       C 410 240, 260 320, 200 440
+       C 150 540, 160 670, 270 760
+       C 350 825, 430 790, 500 710
+       C 570 790, 650 825, 730 760
+       C 840 670, 850 540, 800 440
+       C 740 320, 590 240, 500 240 Z"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="32"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#aanviAuraGlow)"
+  />
+
+  <!-- Soft Pink Cheek Dots -->
+  <circle cx="350" cy="520" r="38" fill="url(#cheekGlowGrad)" />
+  <circle cx="650" cy="520" r="38" fill="url(#cheekGlowGrad)" />
+
+  <!-- Center Glowing Orange Orb -->
+  <circle cx="500" cy="420" r="95" fill="#FF7A00" opacity="0.25" filter="url(#orbCoreGlow)" />
+  <circle
+    cx="500"
+    cy="420"
+    r="76"
+    fill="#160E26"
+    stroke="url(#aanviMascotGrad)"
+    stroke-width="14"
+  />
+  <circle cx="500" cy="420" r="48" fill="url(#orbGlowGrad)" filter="url(#orbCoreGlow)" />
+  <circle cx="520" cy="404" r="14" fill="#FFFFFF" opacity="0.9" />
+
+  <!-- Gentle Smile Line -->
+  <path
+    d="M 450 540 Q 500 595 550 540"
+    stroke="#FFB800"
+    stroke-width="15"
+    stroke-linecap="round"
+    fill="none"
+    filter="url(#aanviAuraGlow)"
+  />
+</svg>

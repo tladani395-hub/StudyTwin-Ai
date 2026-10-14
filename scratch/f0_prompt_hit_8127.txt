@@ -1,0 +1,27 @@
+Created At: 2026-10-10T18:33:25+05:30
+Completed At: 2026-10-10T18:33:25+05:30
+File Path: `file:///d:/StudyTwin-AI/frontend/app/courses/page.tsx`
+Total Lines: 884
+Total Bytes: 40610
+Showing lines 430 to 448
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+430:                   </div>
+431: 
+432:                   {/* Exam Countdown Chip */}
+433:                   {course.exam_date && (
+434:                     <div className="px-3 py-1.5 rounded-btn bg-bg-app border border-border-subtle flex items-center justify-between text-xs font-mono">
+435:                       <div className="flex items-center gap-1.5 text-text-muted">
+436:                         <Calendar className="w-3.5 h-3.5 text-primary" />
+437:                         <span>Exam: {course.exam_date}</span>
+438:                       </div>
+439:                       <span className={`font-bold ${daysLeft !== null && daysLeft <= 14 ? 'text-amber-500' : 'text-primary'}`}>
+440:                         {daysLeft !== null ? (daysLeft > 0 ? `${daysLeft} days left` : 'Exam today!') : 'Scheduled'}
+441:                       </span>
+442:                     </div>
+443:                   )}
+444: 
+445:                   {/* BKT Mastery & Curriculum Progress Stats */}
+446:                   <div className="p-3.5 rounded-2xl bg-bg-app border border-border-subtle space-y-2.5">
+447:                     {/* BKT Mastery Stat */}
+448:                     <div className="flex items-center justify-between text-xs">
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

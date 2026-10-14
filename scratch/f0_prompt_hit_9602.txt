@@ -1,0 +1,48 @@
+Created At: 2026-10-10T23:12:31+05:30
+Completed At: 2026-10-10T23:12:31+05:30
+File Path: `file:///D:/StudyTwin-AI/backend/app/api/health.py`
+Total Lines: 193
+Total Bytes: 7973
+Showing lines 1 to 40
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: import os
+2: import json
+3: import time
+4: from typing import Dict, Any, List
+5: from fastapi import APIRouter, Depends
+6: from sqlalchemy.orm import Session
+7: from app.database.database import get_db
+8: from app.database.models import DocumentChunk, Document, Topic, Course
+9: 
+10: router = APIRouter(prefix="/health", tags=["health"])
+11: 
+12: 
+13: @router.get("/components")
+14: def get_component_health(db: Session = Depends(get_db)) -> Dict[str, Any]:
+15:     """
+16:     Live component reality audit reporting operational status, engine implementation,
+17:     real vs stub status, model names, and ingested course statistics.
+18:     """
+19:     start_time = time.time()
+20:     
+21:     # 1. Inspect Ingested Course Content
+22:     total_chunks = db.query(DocumentChunk).count()
+23:     pdf_chunks = db.query(DocumentChunk).filter(DocumentChunk.source_type == "pdf").count()
+24:     ppt_chunks = db.query(DocumentChunk).filter(DocumentChunk.source_type == "ppt").count()
+25:     video_chunks = db.query(DocumentChunk).filter(DocumentChunk.source_type == "video").count()
+26:     image_chunks = db.query(DocumentChunk).filter(DocumentChunk.source_type == "image").count()
+27:     
+28:     docs = db.query(Document).all()
+29:     topics = db.query(Topic).all()
+30:     
+31:     # Count prerequisite edges
+32:     prereq_edge_count = 0
+33:     for t in topics:
+34:         try:
+35:             p_list = json.loads(t.prerequisites_json or "[]")
+36:             prereq_edge_count += len(p_list)
+37:         except Exception:
+38:             pass
+39: 
+40:     # Count captioned diagrams/figures in chunks
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

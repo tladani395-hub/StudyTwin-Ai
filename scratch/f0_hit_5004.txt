@@ -1,0 +1,45 @@
+Created At: 2026-10-09T18:54:19+05:30
+Completed At: 2026-10-09T18:55:58+05:30
+
+The command exited with code 0.
+Output:
+<truncated 30 lines>
+Show the output of \dt and alembic current, and a row count per table after seeding.
+PART C: AUTHENTICATION (all
+--- NEXT CHUNK ---
+ saved in PostgreSQL)
+Sign up: full name, email, password (strength meter), date of birth, language, and a terms checkbox. Age is calculated on the server from the date of birth, never trusted from the client.
+Age rule (server-enforced):
+Age 15 or less: Explorer mode, a guardian email is required, a consent email is sent, and a limited account is in force until consent is confirmed. The UI says “School / Grade X”, never a university.
+Age 16 or more: Scholar mode.
+Mode is derived from the date of birth, and the user cannot pick Scholar by editing the request.
+Login: email + password, “show password”, rate limiting, and a lockout after 5 failures (temporary, with a friendly message). Use argon2id for hashing. Use httpOnly, Secure, SameSite cookies, CSRF protection and refresh-token rotation.
+Forgot password: email entry, then a single-use token (hashed in the DB, expires in 30 minutes), then a reset page. Always show the same message whether or not the email exists, so accounts can’t be probed. Rate-limit requests. After a reset, revoke all sessions and send a “your password was changed” email. In dev, use a local mail catcher (Mailpit) and show how to read the email; in production, use SMTP env variables.
+Email verification, logout, “logout from all devices”, change password, and delete account (removes the user’s data from the DB after confirmation).
+Mask the guardian email after saving (t***@gmail.com).
+Login, signup and reset pages follow the mode design (Explorer playful cream/plum, Scholar clean emerald/charcoal). For a not-yet-logged-in user, use the neutral default and switch to the mode after the date of birth is entered. Make all text translatable (Part F).
+Tests: signup under 16 vs 16+, a tampered mode is rejected, wrong password lockout, the full reset flow, an expired token fails, a used token fails, and a session is revoked after reset.
+PART D: SCREEN FLOW AFTER LOGIN
+Intro, then Welcome screen with “Sign up” and “Log in” buttons and the language picker (English / हिन्दी / ગુજરાતી).
+After login, routing is by mode and state:
+No courses yet: go to “Add your first course” (an empty state with an upload button and a demo course option).
+Has courses: go to the dashboard of the last active course, with a course switcher in the header.
+Add a My Classes and Courses page with course cards (progress, mastery, due reviews, “Open”), and a “Join a class” box where the student enters a class code.
+Header: course switcher, language switcher, 3D color button, light/dark switch, profile menu. Everything is derived from profile.mode.
+PART E: COURSES CONNECTED EVERYWHERE
+“Add course”: name, subject, language of the material, and optional exam date. Then upload video, PDF or slides (existing ingestion). Show real processing progress (uploaded, transcribed, split into units, concepts found).
+When a course is added or processed, it appears immediately (no reload) on:
+the course list and the course switcher
+the dashboard (mastery, weak topics, map or galax
+--- CHUNK 3 ---
+y, due reviews, exam countdown)
+the quiz page (a course picker, plus topic selection from that course’s concepts)
+the tutor (the answer scope is the selected course, with a “Ask across all my courses” option)
+the Galaxy view and the evaluation scope
+Deleting or archiving a course removes it from all of these, with a confirm dialog. Courses belong to one user (or one class), and isolation is tested.
+Test: add a course, then confirm it shows on the dashboard, quiz and tutor; delete it, and confirm it disappears everywhere.
+PART F: THREE LANGUAGES: ENGLISH, HINDI (हिन्दी), GUJARATI (ગુજરાતી)
+
+Not Hinglish. Use real scripts.
+
+UI translation: i18next with en, hi, gu files. Every label, button, error, empty 

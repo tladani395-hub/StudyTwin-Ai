@@ -1,0 +1,295 @@
+/* ==========================================================================
+   Aanvi Design Tokens (Multimodal AI Hackathon 2026, Track D)
+   Strict 4-Way Semantic Token Matrix:
+   - Explorer Mode (Age <= 15): "Adventure World"
+     Palette A: Coral (#FF6B57) Dominant
+     Palette B: Grape Purple (#7B4BFF) Dominant
+     Accent: Star Yellow (#FFC93C)
+     Light: #FFF8EC / #FFFFFF / #2A1F3D
+     Dark:  #1E1530 / #2B2042 / #FFF3E0
+     Shapes: Radius 24px, Border 3px, Sticker Shadows, NO neon glow
+     Fonts: Baloo 2 (headings), Nunito (body)
+
+   - Scholar Mode (Age >= 16): "Focus Studio"
+     Palette A: Deep Emerald (#0E9F6E) Dominant
+     Palette B: Warm Amber (#F59E0B) Dominant
+     Light: #F7F7F2 / #FFFFFF / #14201B
+     Dark:  #121614 / #1B211E / #E8EEEA
+     Shapes: Radius 10px, Border 1px, Subtle Glass Blur
+     Fonts: Sora (headings), Inter (body), JetBrains Mono (formulas/code only)
+   ========================================================================== */
+
+/* ── 1. SCHOLAR DARK (Default) ── */
+:root,
+[data-mode="scholar"],
+[data-mode="scholar"][data-theme="dark"],
+[data-mode="scholar"][data-theme="dark"][data-palette="a"],
+[data-mode="scholar"][data-theme="dark"][data-palette="primary"] {
+  --bg-app: #121614;
+  --bg-surface: #1B211E;
+  --bg-surface-elevated: #242D29;
+  --bg-sidebar: #0E1210;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(14, 159, 110, 0.6);
+  --border-width: 1px;
+  --radius: 10px;
+  --radius-box: 10px;
+  --btn-height: 44px;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+  /* Palette A: Emerald Dominant */
+  --primary: #0E9F6E;
+  --primary-hover: #057A55;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(14, 159, 110, 0.2);
+  --secondary: #F59E0B;
+  --secondary-hover: #D97706;
+  --secondary-contrast: #121614;
+  --accent: #F59E0B;
+
+  /* Semantic State Tokens */
+  --success: #0E9F6E;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --muted: #9CA3AF;
+  --ring: #0E9F6E;
+
+  --text-main: #E8EEEA;
+  --text-muted: #9CA3AF;
+
+  --font-heading: 'Sora', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Recharts Color Palette */
+  --chart-1: #0E9F6E;
+  --chart-2: #F59E0B;
+  --chart-3: #10B981;
+  --chart-4: #D97706;
+  --chart-5: #6EE7B7;
+}
+
+/* Scholar Dark - Palette B (Amber Dominant) */
+[data-mode="scholar"][data-palette="b"],
+[data-mode="scholar"][data-palette="secondary"],
+[data-mode="scholar"][data-theme="dark"][data-palette="b"],
+[data-mode="scholar"][data-theme="dark"][data-palette="secondary"] {
+  --primary: #F59E0B;
+  --primary-hover: #D97706;
+  --primary-contrast: #121614;
+  --primary-glow: rgba(245, 158, 11, 0.2);
+  --secondary: #0E9F6E;
+  --secondary-hover: #057A55;
+  --secondary-contrast: #FFFFFF;
+  --accent: #0E9F6E;
+  --border-hover: rgba(245, 158, 11, 0.6);
+  --ring: #F59E0B;
+
+  --chart-1: #F59E0B;
+  --chart-2: #0E9F6E;
+  --chart-3: #FBBF24;
+  --chart-4: #057A55;
+  --chart-5: #FDE68A;
+}
+
+/* ── 2. SCHOLAR LIGHT ── */
+[data-mode="scholar"][data-theme="light"],
+[data-mode="scholar"][data-theme="light"][data-palette="a"],
+[data-mode="scholar"][data-theme="light"][data-palette="primary"] {
+  --bg-app: #F7F7F2;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #EFEFE8;
+  --bg-sidebar: #FFFFFF;
+  --border-subtle: #E2E4DE;
+  --border-hover: #0E9F6E;
+  --border-width: 1px;
+  --radius: 10px;
+  --radius-box: 10px;
+  --btn-height: 44px;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  --primary: #0E9F6E;
+  --primary-hover: #057A55;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(14, 159, 110, 0.15);
+  --secondary: #D97706;
+  --secondary-hover: #B45309;
+  --secondary-contrast: #FFFFFF;
+  --accent: #D97706;
+
+  --success: #0E9F6E;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --muted: #6B7280;
+  --ring: #0E9F6E;
+
+  --text-main: #14201B;
+  --text-muted: #526058;
+
+  --font-heading: 'Sora', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --chart-1: #0E9F6E;
+  --chart-2: #D97706;
+  --chart-3: #057A55;
+  --chart-4: #B45309;
+  --chart-5: #34D399;
+}
+
+/* Scholar Light - Palette B (Amber Dominant) */
+[data-mode="scholar"][data-theme="light"][data-palette="b"],
+[data-mode="scholar"][data-theme="light"][data-palette="secondary"] {
+  --primary: #D97706;
+  --primary-hover: #B45309;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(217, 119, 6, 0.15);
+  --secondary: #0E9F6E;
+  --secondary-hover: #057A55;
+  --secondary-contrast: #FFFFFF;
+  --accent: #0E9F6E;
+  --border-hover: #D97706;
+  --ring: #D97706;
+
+  --chart-1: #D97706;
+  --chart-2: #0E9F6E;
+  --chart-3: #B45309;
+  --chart-4: #057A55;
+  --chart-5: #F59E0B;
+}
+
+/* ── 3. EXPLORER DARK (Age <= 15) ── */
+[data-mode="explorer"],
+[data-mode="explorer"][data-theme="dark"],
+[data-mode="explorer"][data-theme="dark"][data-palette="a"],
+[data-mode="explorer"][data-theme="dark"][data-palette="primary"] {
+  --bg-app: #1E1530;
+  --bg-surface: #2B2042;
+  --bg-surface-elevated: #382A56;
+  --bg-sidebar: #171026;
+  --border-subtle: #4D3970;
+  --border-hover: #FF6B57;
+  --border-width: 3px;
+  --radius: 24px;
+  --radius-box: 24px;
+  --btn-height: 56px;
+  --shadow-card: 4px 4px 0px rgba(0, 0, 0, 0.35);
+
+  /* Palette A: Coral Dominant */
+  --primary: #FF6B57;
+  --primary-hover: #E8503A;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(255, 107, 87, 0.25);
+  --secondary: #7B4BFF;
+  --secondary-hover: #6432E6;
+  --secondary-contrast: #FFFFFF;
+  --accent: #FFC93C; /* Star/XP accent */
+
+  --success: #10B981;
+  --warning: #FFC93C;
+  --danger: #FF4D4D;
+  --muted: #D1C7E0;
+  --ring: #FF6B57;
+
+  --text-main: #FFF3E0;
+  --text-muted: #D1C7E0;
+
+  --font-heading: 'Baloo 2', 'Fredoka', cursive, system-ui, sans-serif;
+  --font-body: 'Nunito', 'Quicksand', system-ui, sans-serif;
+  --font-mono: 'Nunito', system-ui, sans-serif; /* Explorer avoids monospace */
+
+  --chart-1: #FF6B57;
+  --chart-2: #7B4BFF;
+  --chart-3: #FFC93C;
+  --chart-4: #FF8A7A;
+  --chart-5: #A78BFA;
+}
+
+/* Explorer Dark - Palette B (Purple Dominant) */
+[data-mode="explorer"][data-palette="b"],
+[data-mode="explorer"][data-palette="secondary"],
+[data-mode="explorer"][data-theme="dark"][data-palette="b"],
+[data-mode="explorer"][data-theme="dark"][data-palette="secondary"] {
+  --primary: #7B4BFF;
+  --primary-hover: #6432E6;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(123, 75, 255, 0.25);
+  --secondary: #FF6B57;
+  --secondary-hover: #E8503A;
+  --secondary-contrast: #FFFFFF;
+  --accent: #FFC93C;
+  --border-hover: #7B4BFF;
+  --ring: #7B4BFF;
+
+  --chart-1: #7B4BFF;
+  --chart-2: #FF6B57;
+  --chart-3: #FFC93C;
+  --chart-4: #A78BFA;
+  --chart-5: #FF8A7A;
+}
+
+/* ── 4. EXPLORER LIGHT ── */
+[data-mode="explorer"][data-theme="light"],
+[data-mode="explorer"][data-theme="light"][data-palette="a"],
+[data-mode="explorer"][data-theme="light"][data-palette="primary"] {
+  --bg-app: #FFF8EC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FFF1DC;
+  --bg-sidebar: #FFF4E2;
+  --border-subtle: #F3DFC1;
+  --border-hover: #FF6B57;
+  --border-width: 3px;
+  --radius: 24px;
+  --radius-box: 24px;
+  --btn-height: 56px;
+  --shadow-card: 4px 4px 0px rgba(42, 31, 61, 0.12);
+
+  --primary: #FF6B57;
+  --primary-hover: #E8503A;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(255, 107, 87, 0.2);
+  --secondary: #7B4BFF;
+  --secondary-hover: #6432E6;
+  --secondary-contrast: #FFFFFF;
+  --accent: #FFC93C;
+
+  --success: #059669;
+  --warning: #D97706;
+  --danger: #E11D48;
+  --muted: #7A6990;
+  --ring: #FF6B57;
+
+  --text-main: #2A1F3D;
+  --text-muted: #6B5B82;
+
+  --font-heading: 'Baloo 2', 'Fredoka', cursive, system-ui, sans-serif;
+  --font-body: 'Nunito', 'Quicksand', system-ui, sans-serif;
+  --font-mono: 'Nunito', system-ui, sans-serif;
+
+  --chart-1: #FF6B57;
+  --chart-2: #7B4BFF;
+  --chart-3: #FFC93C;
+  --chart-4: #E8503A;
+  --chart-5: #6432E6;
+}
+
+/* Explorer Light - Palette B (Purple Dominant) */
+[data-mode="explorer"][data-theme="light"][data-palette="b"],
+[data-mode="explorer"][data-theme="light"][data-palette="secondary"] {
+  --primary: #7B4BFF;
+  --primary-hover: #6432E6;
+  --primary-contrast: #FFFFFF;
+  --primary-glow: rgba(123, 75, 255, 0.2);
+  --secondary: #FF6B57;
+  --secondary-hover: #E8503A;
+  --secondary-contrast: #FFFFFF;
+  --accent: #FFC93C;
+  --border-hover: #7B4BFF;
+  --ring: #7B4BFF;
+
+  --chart-1: #7B4BFF;
+  --chart-2: #FF6B57;
+  --chart-3: #FFC93C;
+  --chart-4: #6432E6;
+  --chart-5: #E8503A;
+}

@@ -1,0 +1,29 @@
+Created At: 2026-10-10T18:32:59+05:30
+Completed At: 2026-10-10T18:32:59+05:30
+File Path: `file:///d:/StudyTwin-AI/frontend/app/courses/page.tsx`
+Total Lines: 888
+Total Bytes: 40701
+Showing lines 340 to 360
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+340:             const dueCount = course.due_reviews_count || 0;
+341:             const progressPct = course.progress_pct || 0;
+342:             const isActive = course.id === activeCourseId;
+343: 
+344:             // Calculate days left to exam
+345:             let daysLeft: number | null = null;
+346:             if (course.exam_date) {
+347:               const examTime = new Date(course.exam_date).getTime();
+348:               const nowTime = new Date().getTime();
+349:               daysLeft = Math.ceil((examTime - nowTime) / (1000 * 60 * 60 * 24));
+350:             }
+351: 
+352:             return (
+353:               <motion.div
+354:                 key={course.id}
+355:                 whileHover={{ y: -2 }}
+356:                 className={`p-5 sm:p-6 rounded-card bg-bg-surface border shadow-card flex flex-col justify-between transition-all ${
+357:                   isActive
+358:                     ? 'ring-2 ring-primary/40 border-primary'
+359:                     : isExplorer
+360:                     ? 'border-[#FF6B57]/30 hover:border-[#FF6B57]'
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

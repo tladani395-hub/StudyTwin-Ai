@@ -1,0 +1,102 @@
+Created At: 2026-10-10T18:30:48+05:30
+Completed At: 2026-10-10T18:30:51+05:30
+
+The command exited with code 0.
+Output:
+<truncated 1 lines>
+frontend\app\courses\page.tsx:345:            let daysLeft: number | null = null;
+frontend\app\courses\page.tsx:346:            if (course.exam_date) {
+frontend\app\courses\page.tsx:347:              const examTime = new Date(course.exam_date).getTime();
+frontend\app\courses\page.tsx:349:              daysLeft = Math.ceil((examTime - nowTime) / (1000 * 60 * 60 * 24));
+frontend\app\courses\page.tsx:365:                  {/* Top Header: Badge, Language, Exam chip & Delete button */}
+frontend\app\courses\page.tsx:436:                  {/* Exam Countdown Chip */}
+frontend\app\courses\page.tsx:437:                  {course.exam_date && (
+frontend\app\courses\page.tsx:441:                        <span>Exam: {course.exam_date}</span>
+frontend\app\courses\page.tsx:443:                      <span className={`font-bold ${daysLeft !== null && daysLeft <= 
+14 ? 'text-amber-500' : 'text-primary'}`}>
+frontend\app\courses\page.tsx:444:                        {daysLeft !== null ? (daysLeft > 0 ? `${daysLeft} days left` 
+: 'Exam today!') : 'Scheduled'}
+frontend\app\courses\page.tsx:589:                Enter the class code given by your teacher or professor (for 
+example: <strong className="text-text-main font-mono">PHY-2026-X</strong>, <strong className="text-text-main 
+font-mono">AANV88</strong>, or <strong className="text-text-main font-mono">CS-2026-A</strong>).
+frontend\app\courses\page.tsx:780:                {/* Optional Exam Date */}
+frontend\app\courses\page.tsx:783:                    <span>Optional Exam Date</span>
+frontend\app\courses\page.tsx:789:                    value={newExamDate}
+frontend\app\courses\page.tsx:790:                    onChange={(e) => setNewExamDate(e.target.value)}
+frontend\app\create-subject\page.tsx:204:                    <option value="Competitive Exam / 
+Professional">Competitive Exam / Professional</option>
+frontend\app\create-subject\page.tsx:217:                    placeholder="e.g. Master core concepts & ace exams"
+frontend\app\evaluation\page.tsx:196:      example_question: 'At timestamp 19:00 in Lecture 4, what analogy does the 
+lecturer use to explain BST insertion?',
+frontend\app\evaluation\page.tsx:202:      example_question: 'According to the BST diagram in Slide 18, what is the 
+output of an in-order traversal?',
+frontend\app\evaluation\page.tsx:208:      example_question: 'Simulated Careless Learner profile in personalization 
+experiment.',
+frontend\app\evaluation\page.tsx:512:                  <span className="text-amber-500 font-bold block mb-1">Example 
+Failing Question:</span>
+frontend\app\evaluation\page.tsx:513:                  &ldquo;{lim.example_question}&rdquo;
+frontend\app\parent-zone\page.tsx:28:  const [parentEmail, setParentEmail] = useState(user?.guardian_email || 
+'guardian.demo@example.com');
+frontend\app\parent-zone\page.tsx:152:              placeholder="guardian.demo@example.com"
+frontend\app\settings\page.tsx:663:                    value={maskEmail('guardian.demo@example.com')}
+frontend\app\signup\page.tsx:220:                placeholder="student@example.com"
+frontend\app\signup\page.tsx:327:                    placeholder="parent.guardian@example.com"
+frontend\app\study-plan\page.tsx:6:  CalendarDays,
+frontend\app\study-plan\page.tsx:19:  const [examDate, setExamDate] = useState('2026-10-25');
+frontend\app\study-plan\page.tsx:23:  const [completedDays, setCompletedDays] = useState<number[]>([1]);
+frontend\app\study-plan\page.tsx:31:        exam_date: examDate,
+frontend\app\study-plan\page.tsx:40:  }, [examDate, hoursPerDay]);
+frontend\app\study-plan\page.tsx:47:    if (completedDays.includes(dayNum)) {
+frontend\app\study-plan\page.tsx:48:      setCompletedDays(completedDays.filter((d) => d !== dayNum));
+frontend\app\study-plan\page.tsx:50:      setCompletedDays([...completedDays, dayNum]);
+frontend\app\study-plan\page.tsx:60:            <CalendarDays className="w-3.5 h-3.5" /> Adaptive Schedule Generator
+frontend\app\study-plan\page.tsx:69:          Calculates spaced repetition drills and prioritized weak topic 
+remediation before your exam deadline.
+frontend\app\study-plan\page.tsx:79:              <span>Target Exam Date</span>
+frontend\app\study-plan\page.tsx:83:              value={examDate}
+frontend\app\study-plan\page.tsx:84:              onChange={(e) => setExamDate(e.target.value)}
+frontend\app\study-plan\page.tsx:131:                  +22% Mastery Gain by Exam Date ({examDate})
+frontend\app\study-plan\page.tsx:142:                <CalendarDays className="w-3.5 h-3.5" />
+frontend\app\study-plan\page.tsx:147:                Completed: <span className="text-primary 
+font-bold">{completedDays.length}</span> / {studyPlan.days.length} Days
+frontend\app\study-plan\page.tsx:153:            {studyPlan.days.map((day) => {
+frontend\app\study-plan\page.tsx:154:              const isDone = completedDays.includes(day.day);
+frontend\app\terms\page.tsx:54:              Aanvi is designed to facilitate student learning, conceptual mastery, and 
+active recall based on ingested course materials. It is not a tool for academic dishonesty or real-time exam cheating.
+frontend\components\curriculum\SubjectPathCreatorModal.tsx:248:                  <option value="Graduate / Competitive 
+Exam">Graduate / Competitive Exam</option>
+frontend\components\curriculum\SubjectPathCreatorModal.tsx:261:                  placeholder="e.g. Master core 
+concepts & ace exams"
+frontend\components\junior\JuniorDashboard.tsx:100:  const mascotMood: MascotMood = (user?.streak_days || 5) >= 5 ? 
+'happy' : masteredCount >= 2 ? 'proud' : 'excited';
+frontend\components\junior\JuniorDashboard.tsx:105:      : (user?.streak_days || 5) >= 5
+frontend\components\junior\JuniorDashboard.tsx:124:                <Flame className="w-4 h-4 fill-[var(--accent)]" /> 
+{user?.streak_days || 5}-Day Streak!
+frontend\components\junior\JuniorDashboard.tsx:379:          {/* Simple rounded bar chart for days */}
+frontend\components\layout\CommandPalette.tsx:57:    { id: 'plan', title: 'Adaptive Study Plan', desc: 'Spaced 
+repetition schedule before exam', icon: Calendar, href: '/study-plan', cat: 'Navigation' },
+frontend\components\layout\ExplorerShell.tsx:110:              <span>{user?.streak_days || 5}d</span>
+frontend\components\layout\ScholarShell.tsx:234:              <span>{user?.streak_days || 5}d Streak</span>
+frontend\components\layout\TopNav.tsx:12:  CalendarDays,
+frontend\components\layout\TopNav.tsx:40:  { name: 'Study Plan', href: '/study-plan', icon: CalendarDays },
+frontend\components\senior\SeniorDashboard.tsx:140:  const readinessPct = Math.round((summary?.exam?.readiness_score 
+|| 0.78) * 100);
+frontend\components\senior\SeniorDashboard.tsx:152:      {/* ── 1. GREETING & EXAM READINESS ROW ── */}
+frontend\components\senior\SeniorDashboard.tsx:175:              <span>Target Final Exam: {summary.exam?.date ? 
+`${summary.exam.date} (${summary.exam.days_left}d left)` : `${summary.exam?.days_left ?? 14} days left`}</span>
+frontend\components\senior\SeniorDashboard.tsx:182:          {/* Exam Readiness Pill */}
+frontend\components\senior\SeniorDashboard.tsx:203:              <span className="text-[10px] font-mono uppercase 
+text-[var(--text-muted)] block">Exam Readiness</span>
+frontend\components\senior\SeniorDashboard.tsx:204:              <span className="text-xs font-bold 
+text-[var(--text-main)]">{summary.exam?.status.replace('_', ' ').toUpperCase()}</span>
+frontend\components\senior\SeniorDashboard.tsx:273:            <span className="text-3xl font-display font-black 
+text-[var(--text-main)]">{summary.streak?.current || 5} Days</span>
+frontend\components\senior\SeniorDashboard.tsx:454:                  {fc.topic} (S: {fc.stability_days}d 
+{fc.is_overdue ? '• Overdue' : ''})
+frontend\components\senior\SeniorDashboard.tsx:501:            <span>Selected Stability: {activeCurve?.stability_days 
+|| 2.5} days</span>
+frontend\components\ui\studenthub-scroll-zoom.tsx:61:      TUTORING, VERIFIED EXAMS, AND REAL-TIME MASTERY TRACKING.
+frontend\components\ui\studenthub-scroll-zoom.tsx:228:              <span>PAPERS & EXAMS</span>
+
+
+

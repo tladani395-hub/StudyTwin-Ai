@@ -1,0 +1,34 @@
+{
+  "high": {
+    "renderCostMs": 0.742857142883752,
+    "lastRenderCostMs": 1,
+    "frameIntervalMs": 53.50526315789475,
+    "fps": 19,
+    "particleCount": 4000,
+    "activeQuality": "high"
+  },
+  "medium": {
+    "renderCostMs": 1.875,
+    "lastRenderCostMs": 1.8999999999068677,
+    "frameIntervalMs": 49.99523809523812,
+    "fps": 20,
+    "particleCount": 2500,
+    "activeQuality": "medium"
+  },
+  "low": {
+    "renderCostMs": 1.959999999962747,
+    "lastRenderCostMs": 1.8000000000465661,
+    "frameIntervalMs": 37.03703703703704,
+    "fps": 27,
+    "particleCount": 1600,
+    "activeQuality": "low"
+  },
+  "mobile": {
+    "renderCostMs": 0.9555555555400335,
+    "lastRenderCostMs": 1.0999999998603016,
+    "frameIntervalMs": 30.806060606060605,
+    "fps": 32,
+    "particleCount": 1200,
+    "activeQuality": "high"
+  }
+}

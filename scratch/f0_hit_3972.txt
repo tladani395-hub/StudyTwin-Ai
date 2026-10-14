@@ -1,0 +1,38 @@
+<USER_REQUEST>
+AANVI: FULL FLOW, AUTH, POSTGRESQL, COURSES AND 3 LANGUAGES
+
+Do NOT rebuild what works. Patch part by part. After each part: run the app, test at 1280px, 768px and 390px in both modes, and show proof (terminal output and screenshot paths). No fake data. If something can’t be done for real, say so.
+
+PART A: THE INTRO MUST ALWAYS PLAY FIRST
+Find why the intro does not show. Check: a localStorage “seen” flag, a route guard redirecting to /login first, a lazy-load error, or the reduced-motion fallback being triggered by mistake. Report the real cause.
+The intro is the first screen on every app start and every full page reload, before any auth check or redirect. It plays in full (about 5 seconds): particles gather into the logo, the outline draws, color fills, “Aanvi” appears letter by letter, the tagline fades in, sparkles burst, then it moves to the next screen.
+Skip button after 1 second, sound toggle (muted by default), and a reduced-motion version (a static logo fade, 1.5s). Remove “once per device”. Add a Settings switch, “Play intro on every visit” (default ON), saved to the DB.
+After the intro: if the user has a valid session, go to their dashboard. If not, go to the Welcome screen (Part D).
+The intro must not be cut short by data loading. Load data in the background while it plays.
+Test with Playwright: reload 3 times, and the intro plays each time; skip works; reduced motion works. Give me frame captures at 0s, 1.5s, 3s and 5s.
+PART B: POSTGRESQL DATABASE
+Move everything to PostgreSQL (docker-compose with a postgres service, DATABASE_URL env). Use SQLAlchemy 2 plus Alembic migrations. No SQLite in the app or tests; use a separate test database.
+Tables (at minimum), with primary keys, foreign keys, indexes and created_at/updated_at:
+users (id uuid, email unique lowercase, password_hash, full_name, date_of_birth, age_group, mode, language, guardian_email_encrypted, guardian_consent_at, email_verified_at, is_active)
+sessions / refresh_tokens (hashed token, device, expires_at, revoked_at)
+password_reset_tokens (hashed token, user_id, expires_at, used_at)
+email_verification_tokens
+auth_events (login success/fail, reset requested, password changed, IP hash)
+user_settings (palette, theme, language, intro_every_visit, sound, reduced_motion)
+courses, course_enrollments, course_materials (video, pdf, slides), content_units, concepts, concept_prerequisites
+classes, class_members (join by class code)
+quizzes, quiz_questions, quiz_attempts, attempt_answers
+mastery_states, review_schedule, xp_events, streak_days, game_plays, badges, user_badges
+chat_threads, chat_messages (with a language column)
+translations_cache
+Every table that holds student data is filtered by user_id in the query layer. Add a test proving user A can never read user B’s rows.
+Provide make db-up, make migrate, make seed, and a backup/restore note in the docs.
+Show the output of \dt and alembic current, and a row count per table after seeding.
+PART C: AUTHENTICATION (all saved in PostgreSQL)
+Sign up: full name, email, password (strength meter), date of birth, language, and a terms checkbox. Age is calculated on the server from the date of birth, never trusted from the client.
+Age rule (server-enforced):
+Age 15 or less: Explorer mode, a guardian email is required, a consent email is sent, and a limited account is in force until consent is confirmed. The UI says “School / Grade X”, never a university.
+Age 16 or more: Scholar mode.
+Mode is derived from the date of birth, and the user cannot pick Scholar by editing the request.
+Login: email + password, “show password”, rate limiting, and a lockout after 5 failures (temporary, with a friendly message). Use argon2id for hashing. Use httpOnly, Secure, SameSite cookies, CSRF protection and refresh-token rotation.
+Forgot password: email entry, then a single-use token (hashed in the DB, expires in 30 minutes), then a reset page. Always show the same message whether or not the email exists, so accounts can’t be 

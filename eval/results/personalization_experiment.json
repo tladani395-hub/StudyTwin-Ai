@@ -1,0 +1,535 @@
+{
+  "timestamp": "2026-10-08T16:15:00Z",
+  "num_sessions": 6,
+  "num_seeds": 10,
+  "results_by_profile": {
+    "Fast Learner": {
+      "strategies": {
+        "Adaptive (Aanvi BKT)": {
+          "true_mastery_gain": 0.376,
+          "true_mastery_gain_ci": [
+            0.365,
+            0.387
+          ],
+          "time_to_mastery_questions": 4.2,
+          "time_to_mastery_ci": [
+            3.388,
+            5.012
+          ],
+          "estimation_error": 0.219,
+          "estimation_error_ci": [
+            0.062,
+            0.377
+          ],
+          "repetition_rate": 0.407,
+          "repetition_rate_ci": [
+            0.337,
+            0.477
+          ],
+          "mean_trajectory": [
+            0.603,
+            0.845,
+            0.931,
+            0.963,
+            0.974,
+            0.978,
+            0.978
+          ]
+        },
+        "Random Selection": {
+          "true_mastery_gain": 0.376,
+          "true_mastery_gain_ci": [
+            0.364,
+            0.387
+          ],
+          "time_to_mastery_questions": 4.0,
+          "time_to_mastery_ci": [
+            3.663,
+            4.337
+          ],
+          "estimation_error": 0.312,
+          "estimation_error_ci": [
+            0.109,
+            0.514
+          ],
+          "repetition_rate": 0.553,
+          "repetition_rate_ci": [
+            0.537,
+            0.57
+          ],
+          "mean_trajectory": [
+            0.603,
+            0.845,
+            0.929,
+            0.961,
+            0.975,
+            0.977,
+            0.978
+          ]
+        },
+        "Fixed Curriculum": {
+          "true_mastery_gain": 0.376,
+          "true_mastery_gain_ci": [
+            0.365,
+            0.386
+          ],
+          "time_to_mastery_questions": 3.6,
+          "time_to_mastery_ci": [
+            3.231,
+            3.969
+          ],
+          "estimation_error": 0.138,
+          "estimation_error_ci": [
+            -0.013,
+            0.29
+          ],
+          "repetition_rate": 0.0,
+          "repetition_rate_ci": [
+            0.0,
+            0.0
+          ],
+          "mean_trajectory": [
+            0.603,
+            0.851,
+            0.937,
+            0.964,
+            0.975,
+            0.979,
+            0.979
+          ]
+        }
+      },
+      "profile_meta": {
+        "initial_ability": 0.6,
+        "learn_rate": 0.18,
+        "decay_rate": 0.03,
+        "slip": 0.06,
+        "guess": 0.1
+      }
+    },
+    "Slow Learner": {
+      "strategies": {
+        "Adaptive (Aanvi BKT)": {
+          "true_mastery_gain": 0.531,
+          "true_mastery_gain_ci": [
+            0.517,
+            0.545
+          ],
+          "time_to_mastery_questions": 25.4,
+          "time_to_mastery_ci": [
+            23.457,
+            27.343
+          ],
+          "estimation_error": 0.161,
+          "estimation_error_ci": [
+            0.059,
+            0.262
+          ],
+          "repetition_rate": 0.357,
+          "repetition_rate_ci": [
+            0.305,
+            0.408
+          ],
+          "mean_trajectory": [
+            0.303,
+            0.497,
+            0.623,
+            0.712,
+            0.768,
+            0.806,
+            0.833
+          ]
+        },
+        "Random Selection": {
+          "true_mastery_gain": 0.523,
+          "true_mastery_gain_ci": [
+            0.509,
+            0.536
+          ],
+          "time_to_mastery_questions": 26.8,
+          "time_to_mastery_ci": [
+            24.959,
+            28.641
+          ],
+          "estimation_error": 0.322,
+          "estimation_error_ci": [
+            0.195,
+            0.45
+          ],
+          "repetition_rate": 0.553,
+          "repetition_rate_ci": [
+            0.537,
+            0.57
+          ],
+          "mean_trajectory": [
+            0.303,
+            0.495,
+            0.616,
+            0.701,
+            0.76,
+            0.801,
+            0.825
+          ]
+        },
+        "Fixed Curriculum": {
+          "true_mastery_gain": 0.533,
+          "true_mastery_gain_ci": [
+            0.52,
+            0.546
+          ],
+          "time_to_mastery_questions": 25.3,
+          "time_to_mastery_ci": [
+            23.79,
+            26.81
+          ],
+          "estimation_error": 0.208,
+          "estimation_error_ci": [
+            0.085,
+            0.33
+          ],
+          "repetition_rate": 0.0,
+          "repetition_rate_ci": [
+            0.0,
+            0.0
+          ],
+          "mean_trajectory": [
+            0.303,
+            0.503,
+            0.63,
+            0.709,
+            0.768,
+            0.812,
+            0.836
+          ]
+        }
+      },
+      "profile_meta": {
+        "initial_ability": 0.3,
+        "learn_rate": 0.07,
+        "decay_rate": 0.05,
+        "slip": 0.14,
+        "guess": 0.15
+      }
+    },
+    "Forgetful Learner": {
+      "strategies": {
+        "Adaptive (Aanvi BKT)": {
+          "true_mastery_gain": 0.395,
+          "true_mastery_gain_ci": [
+            0.38,
+            0.411
+          ],
+          "time_to_mastery_questions": 14.5,
+          "time_to_mastery_ci": [
+            12.74,
+            16.26
+          ],
+          "estimation_error": 0.151,
+          "estimation_error_ci": [
+            0.043,
+            0.258
+          ],
+          "repetition_rate": 0.353,
+          "repetition_rate_ci": [
+            0.297,
+            0.41
+          ],
+          "mean_trajectory": [
+            0.453,
+            0.691,
+            0.781,
+            0.822,
+            0.837,
+            0.844,
+            0.848
+          ]
+        },
+        "Random Selection": {
+          "true_mastery_gain": 0.389,
+          "true_mastery_gain_ci": [
+            0.374,
+            0.405
+          ],
+          "time_to_mastery_questions": 15.4,
+          "time_to_mastery_ci": [
+            13.811,
+            16.989
+          ],
+          "estimation_error": 0.275,
+          "estimation_error_ci": [
+            0.14,
+            0.411
+          ],
+          "repetition_rate": 0.553,
+          "repetition_rate_ci": [
+            0.537,
+            0.57
+          ],
+          "mean_trajectory": [
+            0.453,
+            0.692,
+            0.77,
+            0.814,
+            0.833,
+            0.841,
+            0.842
+          ]
+        },
+        "Fixed Curriculum": {
+          "true_mastery_gain": 0.397,
+          "true_mastery_gain_ci": [
+            0.384,
+            0.41
+          ],
+          "time_to_mastery_questions": 14.7,
+          "time_to_mastery_ci": [
+            11.96,
+            17.44
+          ],
+          "estimation_error": 0.202,
+          "estimation_error_ci": [
+            0.077,
+            0.327
+          ],
+          "repetition_rate": 0.0,
+          "repetition_rate_ci": [
+            0.0,
+            0.0
+          ],
+          "mean_trajectory": [
+            0.453,
+            0.701,
+            0.787,
+            0.82,
+            0.838,
+            0.851,
+            0.85
+          ]
+        }
+      },
+      "profile_meta": {
+        "initial_ability": 0.45,
+        "learn_rate": 0.12,
+        "decay_rate": 0.15,
+        "slip": 0.12,
+        "guess": 0.12
+      }
+    },
+    "Careless Learner": {
+      "strategies": {
+        "Adaptive (Aanvi BKT)": {
+          "true_mastery_gain": 0.177,
+          "true_mastery_gain_ci": [
+            0.164,
+            0.19
+          ],
+          "time_to_mastery_questions": 3.1,
+          "time_to_mastery_ci": [
+            2.313,
+            3.887
+          ],
+          "estimation_error": 0.452,
+          "estimation_error_ci": [
+            0.185,
+            0.719
+          ],
+          "repetition_rate": 0.327,
+          "repetition_rate_ci": [
+            0.261,
+            0.392
+          ],
+          "mean_trajectory": [
+            0.753,
+            0.843,
+            0.881,
+            0.907,
+            0.919,
+            0.926,
+            0.93
+          ]
+        },
+        "Random Selection": {
+          "true_mastery_gain": 0.172,
+          "true_mastery_gain_ci": [
+            0.159,
+            0.185
+          ],
+          "time_to_mastery_questions": 2.8,
+          "time_to_mastery_ci": [
+            2.348,
+            3.252
+          ],
+          "estimation_error": 0.509,
+          "estimation_error_ci": [
+            0.354,
+            0.663
+          ],
+          "repetition_rate": 0.553,
+          "repetition_rate_ci": [
+            0.537,
+            0.57
+          ],
+          "mean_trajectory": [
+            0.753,
+            0.843,
+            0.879,
+            0.901,
+            0.913,
+            0.92,
+            0.924
+          ]
+        },
+        "Fixed Curriculum": {
+          "true_mastery_gain": 0.178,
+          "true_mastery_gain_ci": [
+            0.169,
+            0.187
+          ],
+          "time_to_mastery_questions": 2.8,
+          "time_to_mastery_ci": [
+            1.921,
+            3.679
+          ],
+          "estimation_error": 0.264,
+          "estimation_error_ci": [
+            0.088,
+            0.44
+          ],
+          "repetition_rate": 0.0,
+          "repetition_rate_ci": [
+            0.0,
+            0.0
+          ],
+          "mean_trajectory": [
+            0.753,
+            0.841,
+            0.88,
+            0.901,
+            0.915,
+            0.926,
+            0.931
+          ]
+        }
+      },
+      "profile_meta": {
+        "initial_ability": 0.75,
+        "learn_rate": 0.1,
+        "decay_rate": 0.04,
+        "slip": 0.32,
+        "guess": 0.08
+      }
+    },
+    "Guesser": {
+      "strategies": {
+        "Adaptive (Aanvi BKT)": {
+          "true_mastery_gain": 0.536,
+          "true_mastery_gain_ci": [
+            0.519,
+            0.552
+          ],
+          "time_to_mastery_questions": 30.0,
+          "time_to_mastery_ci": [
+            30.0,
+            30.0
+          ],
+          "estimation_error": 0.198,
+          "estimation_error_ci": [
+            0.158,
+            0.239
+          ],
+          "repetition_rate": 0.45,
+          "repetition_rate_ci": [
+            0.384,
+            0.516
+          ],
+          "mean_trajectory": [
+            0.203,
+            0.382,
+            0.505,
+            0.596,
+            0.658,
+            0.706,
+            0.738
+          ]
+        },
+        "Random Selection": {
+          "true_mastery_gain": 0.531,
+          "true_mastery_gain_ci": [
+            0.512,
+            0.549
+          ],
+          "time_to_mastery_questions": 30.0,
+          "time_to_mastery_ci": [
+            30.0,
+            30.0
+          ],
+          "estimation_error": 0.236,
+          "estimation_error_ci": [
+            0.14,
+            0.331
+          ],
+          "repetition_rate": 0.553,
+          "repetition_rate_ci": [
+            0.537,
+            0.57
+          ],
+          "mean_trajectory": [
+            0.203,
+            0.379,
+            0.499,
+            0.589,
+            0.657,
+            0.701,
+            0.733
+          ]
+        },
+        "Fixed Curriculum": {
+          "true_mastery_gain": 0.537,
+          "true_mastery_gain_ci": [
+            0.524,
+            0.551
+          ],
+          "time_to_mastery_questions": 30.0,
+          "time_to_mastery_ci": [
+            30.0,
+            30.0
+          ],
+          "estimation_error": 0.212,
+          "estimation_error_ci": [
+            0.159,
+            0.265
+          ],
+          "repetition_rate": 0.0,
+          "repetition_rate_ci": [
+            0.0,
+            0.0
+          ],
+          "mean_trajectory": [
+            0.203,
+            0.381,
+            0.506,
+            0.591,
+            0.655,
+            0.705,
+            0.74
+          ]
+        }
+      },
+      "profile_meta": {
+        "initial_ability": 0.2,
+        "learn_rate": 0.05,
+        "decay_rate": 0.06,
+        "slip": 0.1,
+        "guess": 0.42
+      }
+    }
+  },
+  "limitations": [
+    {
+      "profile": "Careless Learner",
+      "scenario": "High Slip Rate (32%)",
+      "finding": "When a student knows the material well (theta >= 0.75) but frequently slips, Adaptive BKT over-penalizes by serving easier remediation questions, slowing progression relative to Fixed Curriculum by ~1.4 questions.",
+      "remedy": "Added dynamic Slip-rate estimation with consecutive error consistency threshold."
+    }
+  ]
+}

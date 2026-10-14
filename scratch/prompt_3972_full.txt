@@ -1,0 +1,98 @@
+<USER_REQUEST>
+AANVI: FULL FLOW, AUTH, POSTGRESQL, COURSES AND 3 LANGUAGES
+
+Do NOT rebuild what works. Patch part by part. After each part: run the app, test at 1280px, 768px and 390px in both modes, and show proof (terminal output and screenshot paths). No fake data. If something can’t be done for real, say so.
+
+PART A: THE INTRO MUST ALWAYS PLAY FIRST
+Find why the intro does not show. Check: a localStorage “seen” flag, a route guard redirecting to /login first, a lazy-load error, or the reduced-motion fallback being triggered by mistake. Report the real cause.
+The intro is the first screen on every app start and every full page reload, before any auth check or redirect. It plays in full (about 5 seconds): particles gather into the logo, the outline draws, color fills, “Aanvi” appears letter by letter, the tagline fades in, sparkles burst, then it moves to the next screen.
+Skip button after 1 second, sound toggle (muted by default), and a reduced-motion version (a static logo fade, 1.5s). Remove “once per device”. Add a Settings switch, “Play intro on every visit” (default ON), saved to the DB.
+After the intro: if the user has a valid session, go to their dashboard. If not, go to the Welcome screen (Part D).
+The intro must not be cut short by data loading. Load data in the background while it plays.
+Test with Playwright: reload 3 times, and the intro plays each time; skip works; reduced motion works. Give me frame captures at 0s, 1.5s, 3s and 5s.
+PART B: POSTGRESQL DATABASE
+Move everything to PostgreSQL (docker-compose with a postgres service, DATABASE_URL env). Use SQLAlchemy 2 plus Alembic migrations. No SQLite in the app or tests; use a separate test database.
+Tables (at minimum), with primary keys, foreign keys, indexes and created_at/updated_at:
+users (id uuid, email unique lowercase, password_hash, full_name, date_of_birth, age_group, mode, language, guardian_email_encrypted, guardian_consent_at, email_verified_at, is_active)
+sessions / refresh_tokens (hashed token, device, expires_at, revoked_at)
+password_reset_tokens (hashed token, user_id, expires_at, used_at)
+email_verification_tokens
+auth_events (login success/fail, reset requested, password changed, IP hash)
+user_settings (palette, theme, language, intro_every_visit, sound, reduced_motion)
+courses, course_enrollments, course_materials (video, pdf, slides), content_units, concepts, concept_prerequisites
+classes, class_members (join by class code)
+quizzes, quiz_questions, quiz_attempts, attempt_answers
+mastery_states, review_schedule, xp_events, streak_days, game_plays, badges, user_badges
+chat_threads, chat_messages (with a language column)
+translations_cache
+Every table that holds student data is filtered by user_id in the query layer. Add a test proving user A can never read user B’s rows.
+Provide make db-up, make migrate, make seed, and a backup/restore note in the docs.
+Show the output of \dt and alembic current, and a row count per table after seeding.
+PART C: AUTHENTICATION (all saved in PostgreSQL)
+Sign up: full name, email, password (strength meter), date of birth, language, and a terms checkbox. Age is calculated on the server from the date of birth, never trusted from the client.
+Age rule (server-enforced):
+Age 15 or less: Explorer mode, a guardian email is required, a consent email is sent, and a limited account is in force until consent is confirmed. The UI says “School / Grade X”, never a university.
+Age 16 or more: Scholar mode.
+Mode is derived from the date of birth, and the user cannot pick Scholar by editing the request.
+Login: email + password, “show password”, rate limiting, and a lockout after 5 failures (temporary, with a friendly message). Use argon2id for hashing. Use httpOnly, Secure, SameSite cookies, CSRF protection and refresh-token rotation.
+Forgot password: email entry, then a single-use token (hashed in the DB, expires in 30 minutes), then a reset page. Always show the same message whether or not the email exists, so accounts can’t be probed. Rate-limit requests. After a reset, revoke all sessions and send a “your password was changed” email. In dev, use a local mail catcher (Mailpit) and show how to read the email; in production, use SMTP env variables.
+Email verification, logout, “logout from all devices”, change password, and delete account (removes the user’s data from the DB after confirmation).
+Mask the guardian email after saving (t***@gmail.com).
+Login, signup and reset pages follow the mode design (Explorer playful cream/plum, Scholar clean emerald/charcoal). For a not-yet-logged-in user, use the neutral default and switch to the mode after the date of birth is entered. Make all text translatable (Part F).
+Tests: signup under 16 vs 16+, a tampered mode is rejected, wrong password lockout, the full reset flow, an expired token fails, a used token fails, and a session is revoked after reset.
+PART D: SCREEN FLOW AFTER LOGIN
+Intro, then Welcome screen with “Sign up” and “Log in” buttons and the language picker (English / हिन्दी / ગુજરાતી).
+After login, routing is by mode and state:
+No courses yet: go to “Add your first course” (an empty state with an upload button and a demo course option).
+Has courses: go to the dashboard of the last active course, with a course switcher in the header.
+Add a My Classes and Courses page with course cards (progress, mastery, due reviews, “Open”), and a “Join a class” box where the student enters a class code.
+Header: course switcher, language switcher, 3D color button, light/dark switch, profile menu. Everything is derived from profile.mode.
+PART E: COURSES CONNECTED EVERYWHERE
+“Add course”: name, subject, language of the material, and optional exam date. Then upload video, PDF or slides (existing ingestion). Show real processing progress (uploaded, transcribed, split into units, concepts found).
+When a course is added or processed, it appears immediately (no reload) on:
+the course list and the course switcher
+the dashboard (mastery, weak topics, map or galaxy, due reviews, exam countdown)
+the quiz page (a course picker, plus topic selection from that course’s concepts)
+the tutor (the answer scope is the selected course, with a “Ask across all my courses” option)
+the Galaxy view and the evaluation scope
+Deleting or archiving a course removes it from all of these, with a confirm dialog. Courses belong to one user (or one class), and isolation is tested.
+Test: add a course, then confirm it shows on the dashboard, quiz and tutor; delete it, and confirm it disappears everywhere.
+PART F: THREE LANGUAGES: ENGLISH, HINDI (हिन्दी), GUJARATI (ગુજરાતી)
+
+Not Hinglish. Use real scripts.
+
+UI translation: i18next with en, hi, gu files. Every label, button, error, empty state, email template, mascot line and quiz timer message is translated. No hard-coded strings. A test fails the build if a key is missing in any language. Have a native speaker review the strings, and mark in the docs which translations are unreviewed.
+Language choice: set at signup and changeable anywhere. Saved in users.language and user_settings, and restored on login.
+AI answers in the user’s language (this is the main rule):
+Detect the language of each message (Devanagari script means Hindi, Gujarati script means Gujarati, otherwise English). The detected language overrides the setting for that reply, so a person can switch mid-chat.
+If the user types Hindi or Gujarati in English letters, reply in the proper script (Devanagari or Gujarati), not Hinglish.
+Tutor answers, quiz questions, options, explanations, feedback, the “Why this question?” line, grounding chips and the post-quiz report are all generated in that language.
+Technical terms: write the native term, with the English term in brackets the first time, for example "द्विआधारी खोज (Binary Search)".
+Math and code stay in standard notation (KaTeX, code blocks).
+Retrieval across languages: use a multilingual embedding model (for example bge-m3 or multilingual-e5) so a Hindi question can find English course material and the reverse. Citations still point to the original source page or timestamp. Say in the answer when the source is in another language.
+Voice and camera: faster-whisper with language auto-detect (hi, gu, en); TTS voices for all three languages (flag clearly if a voice is not available); OCR with the Devanagari and Gujarati packs (Tesseract hin, guj) for “Snap a question”.
+Safety in all three languages: moderation, self-harm response, prompt-injection tests and the refusal (“This isn’t covered in your material”) all work and are translated. Add test cases in Hindi and Gujarati.
+Fonts: Baloo 2 (supports Devanagari) and Baloo Bhai 2 (Gujarati) for Explorer headings; Noto Sans Devanagari / Noto Sans Gujarati for body and Scholar. Check that no text is clipped, since Devanagari and Gujarati need more line height.
+Evaluation: add 20 Hindi and 20 Gujarati questions to the test set and report faithfulness, citation accuracy and refusal accuracy per language on the /evaluation page. Report honestly where Hindi or Gujarati is weaker.
+Proof: screenshots of the same chat answered in English, Hindi and Gujarati, a quiz in each language, and the language tests passing.
+PART G: DASHBOARD AND QUIZ CONNECTION CHECK
+Taking a quiz in any language updates mastery, XP, streak, due reviews and weak topics for that course, and the dashboard refreshes without a reload.
+The dashboards, galaxy and evaluation pages show text in the active language.
+Show a before/after recording: add a course, upload material, ask a question in Gujarati, take a quiz in Hindi, and return to the dashboard.
+PART H: FINAL CHECKS
+Playwright e2e: full journey for Demo Explorer (age 12) and Demo Scholar (age 20): intro, signup, login, add course, tutor, quiz, dashboard, logout, login (settings restored), forgot password, reset, login with the new password.
+All backend, frontend and e2e tests pass, CI is green, npm run build shows 0 errors, and there are no console errors.
+README: setup in 3 commands (docker compose, migrate, seed), env variables, and a table of what is real and what is cached.
+A plain list of anything still mocked, cached, unreviewed (translations) or not working.
+
+Stop after each part and show proof before continuing.
+
+Notes
+
+Part F, item 3 is a decision I made: Romanized Hindi gets a Devanagari reply. If you’d rather the AI mirror the user’s own typing style, change that line.
+I assumed one user role (student) and a simple class code. If you want teacher accounts and class dashboards, tell me and I’ll add that as a separate part.
+Have a Hindi and a Gujarati speaker read the translated screens before you record the demo. Machine translation of educational terms often sounds unnatural.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-09T13:00:53+05:30.
+</ADDITIONAL_METADATA>

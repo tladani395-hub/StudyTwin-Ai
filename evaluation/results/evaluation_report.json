@@ -1,0 +1,16 @@
+{
+  "metrics": {
+    "faithfulness": 0.99,
+    "answer_relevancy": 0.93,
+    "context_precision": 0.533,
+    "context_recall": 0.92,
+    "unsupported_query_detection": 1.0,
+    "question_repetition_rate": 0.017
+  },
+  "details": {
+    "total_evaluated": 8,
+    "grounded_count": 5,
+    "unsupported_count": 3,
+    "anti_duplication_verified": false
+  }
+}

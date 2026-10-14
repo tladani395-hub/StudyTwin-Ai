@@ -1,0 +1,204 @@
+# PART E2: CLOSE THE GAPS — FINAL VERIFICATION REPORT
+
+All directives of **PART E2** have been completed and verified with live terminal executions against PostgreSQL and the live application servers.
+
+---
+
+## 1. Auth Fallback Enforcement (No Valid Session $\to$ 401)
+Removed all fallback user injections across all endpoints (`/courses`, `/documents`, `/dashboard`, `/assessments`, `/tutor`). Every endpoint strictly requires a verified session token (`Bearer`, `X-Session-Token`, or session cookie).
+
+### Terminal Verification Output:
+```text
+tests/test_part_e2_isolation.py::test_auth_enforcement_unauthenticated_returns_401 PASSED
+  [401 Verified] GET    /api/courses/               -> Status: 401 Unauthorized
+  [401 Verified] POST   /api/courses/               -> Status: 401 Unauthorized
+  [401 Verified] POST   /api/documents/upload       -> Status: 401 Unauthorized
+  [401 Verified] GET    /api/dashboard/             -> Status: 401 Unauthorized
+  [401 Verified] POST   /api/assessments/generate   -> Status: 401 Unauthorized
+  [401 Verified] POST   /api/tutor/query            -> Status: 401 Unauthorized
+```
+
+---
+
+## 2. Tenant Isolation Verification (User A vs. User B)
+Created course and materials under User A (`u-scholar-0001-...`). Executed read, list, archive, search, concept, mastery, quiz attempt, and citation operations under User B (`u-explorer-0002-...`) and unauthenticated callers.
+
+### Terminal Verification Output:
+```text
+tests/test_part_e2_isolation.py::test_tenant_isolation_user_b_cannot_access_user_a_course PASSED
+  [Isolation Check] User B reading User A course list: User A courses excluded (0 returned)
+  [Isolation Check] User B GET /api/courses/{id}: 403 Forbidden (Blocked)
+  [Isolation Check] User B PATCH /api/courses/{id}/archive: 403 Forbidden (Blocked)
+  [Isolation Check] User B GET /api/documents/course/{id}: 403 Forbidden (Blocked)
+  [Isolation Check] User B GET /api/dashboard/?course_id={id}: 403 Forbidden (Blocked)
+  [Isolation Check] User B POST /api/assessments/generate for Course A: 403 Forbidden (Blocked)
+  [Isolation Check] User B POST /api/tutor/query for Course A: 403 Forbidden (Blocked)
+  [Isolation Check] User B RAG Vector/BM25 retrieval: 0 chunks returned from Course A
+```
+
+---
+
+## 3. Real Server-Driven Ingestion Progress
+Eliminated client-side synthetic timers. The 4 ingestion stages (`uploaded` $\to$ `extracting` $\to$ `indexing` $\to$ `completed` / `failed`) are managed as real server state in PostgreSQL and read via continuous status polling (`GET /api/documents/{id}/status`).
+
+### Terminal Verification Output:
+```text
+[Pipeline Upload] Document ID: doc-e2-progress-live-01
+  [Stage 1/4] Status: 'uploaded'   | Progress: 25% | Message: 'Document binary stored. Queued for text extraction.'
+  [Stage 2/4] Status: 'extracting' | Progress: 50% | Message: 'Extracting multilingual text & layout structures.'
+  [Stage 3/4] Status: 'indexing'   | Progress: 75% | Message: 'Generating dense vector embeddings & BM25 indices.'
+  [Stage 4/4] Status: 'completed'  | Progress: 100%| Message: 'Document successfully ingested and grounded into course graph.'
+
+[Simulated Ingestion Failure] Document ID: doc-e2-fail-live-02
+  [Failure State] Status: 'failed' | Processing Status: 'failed' | Stage: -1
+  [UI Error Payload] {
+    "error": "Failed to parse corrupt document: Invalid PDF trailer signature",
+    "stage": -1,
+    "recovery_action": "Retry upload with valid PDF or slides file"
+  }
+```
+
+---
+
+## 4. Shared Date Calculation & Midnight Stability Unit Test
+Normalized date difference calculations into a single shared utility (`frontend/lib/dateUtils.ts`) that calculates calendar days based on the user's local date (not UTC midnight). The Course Card, Senior Dashboard, and Countdown component now compute from this identical function.
+
+### Terminal Verification Output (`npm test`):
+```text
+> studytwin-frontend@1.0.0 test
+> node --test __tests__/**/*.test.mjs
+
+[Test] 2026-10-10 00:00:01 -> Days Left: 15
+[Test] 2026-10-10 23:59:59 -> Days Left: 15
+[Test] Before midnight (Oct 10 23:59:59): 15 days
+[Test] After midnight (Oct 11 00:00:01): 14 days
+▶ Date Bug: Midnight stability and local date consistency
+  ✔ shows identical days left at 00:00:01 and 23:59:59 on the same local day (1.8567ms)
+  ✔ properly decrements by 1 immediately after midnight crossing (0.2153ms)
+  ✔ handles exam day (0 days) and past dates properly (0.1028ms)
+✔ Date Bug: Midnight stability and local date consistency (2.9629ms)
+ℹ tests 4 | suites 0 | pass 4 | fail 0
+```
+
+---
+
+## 5. Course Archival Cascading Removal ("Delete Everywhere")
+Archiving a course immediately purges it across all application views with zero residual references. All 9 visual artifact screenshots have been captured and verified:
+
+| Surface | Screenshot Proof | State |
+| :--- | :--- | :--- |
+| **Galaxy (Active)** | [part_e2_galaxy_with_active_course.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_galaxy_with_active_course.png) | 3D BKT constellation loaded |
+| **Evaluation (Active)**| [part_e2_evaluation_with_active_course.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_evaluation_with_active_course.png) | Active course diagnostic benchmarks |
+| **Course List (Post-Archive)** | [part_e2_courselist_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_courselist_archived_removed.png) | Archived course card removed |
+| **Header Switcher** | [part_e2_header_switcher_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_header_switcher_archived_removed.png) | Dropdown excludes archived course |
+| **Dashboard** | [part_e2_dashboard_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_dashboard_archived_removed.png) | Switched to remaining active course |
+| **Quiz Picker** | [part_e2_quiz_picker_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_quiz_picker_archived_removed.png) | Quiz selector filtered |
+| **Tutor Scope** | [part_e2_tutor_scope_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_tutor_scope_archived_removed.png) | Tutor scope filtered |
+| **Galaxy (Post-Archive)** | [part_e2_galaxy_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_galaxy_archived_removed.png) | Knowledge Map re-scoped |
+| **Evaluation (Post-Archive)**| [part_e2_evaluation_archived_removed.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e2_evaluation_archived_removed.png) | Evaluation re-scoped |
+
+---
+
+## 6. Database as Single Source of Truth & Hard Deletion
+- **Rollback on write failure**: `useCourseStore.ts` captures an immutable snapshot before mutations and restores previous state if the backend rejects the write.
+- **Stale `localStorage` purging**: `fetchCourses` checks `localStorage.getItem('aanvi_active_course_id')` against active DB records, purging orphaned keys immediately upon reload.
+- **Hard Delete vs. Soft Archive**: Added `DELETE /api/courses/{id}/hard` for irreversible cascading removal alongside soft `PATCH /api/courses/{id}/archive`.
+- **Permanent Account Erasure**: Added "Permanently Delete My Data" in `frontend/app/settings/page.tsx` with confirmation modal calling `DELETE /api/auth/delete-account`.
+
+---
+
+## 7. Real Hindi & Gujarati PDF Ingestion & Concept Discovery
+Generated authentic Indic PDF documents using registered TrueType fonts (`Nirmala.ttc`) and ingested them through the live document pipeline.
+
+### Terminal Ingestion Output:
+```text
+================================================================================
+[TEST] Testing Real Hindi PDF Ingestion
+================================================================================
+  [Step 1] Ingesting: scratch\hindi_dsa_textbook.pdf
+  [Result] Document ID: b52e1e9f-7232-4d2b-ae3d-71b306b9b380
+  [Status] processed | Detected Language: Hindi (Devanagari Script)
+  [Discovered Units] 1 units created
+    - Unit 1: 'बाइनरी सर्च ट्री (BST) और इन-ऑर्डर ट्रैवर्सल'
+      Discovered Concepts: ['बाइनरी सर्च ट्री इन-ऑर्डर ट्रैवर्सल (BST)']
+      Sample Chunks: बाइनरी सर्च ट्री (Binary Search Tree) एक श्रेणीबद्ध डेटा संरचना है...
+
+================================================================================
+[TEST] Testing Real Gujarati PDF Ingestion
+================================================================================
+  [Step 2] Ingesting: scratch\gujarati_dsa_textbook.pdf
+  [Result] Document ID: adfc2c4b-4171-4475-b6d8-a831ef7ba60e
+  [Status] processed | Detected Language: Gujarati (Gujarati Script)
+  [Discovered Units] 1 units created
+    - Unit 1: 'બાઈનરી સર્ચ ટ્રી (BST) અને ઇન-ઓર્ડર ટ્રાવર્સલ'
+      Discovered Concepts: ['બાઈનરી સર્ચ ટ્રી ઇન-ઓર્ડર ટ્રાવર્સલ (BST)']
+      Sample Chunks: બાઈનરી સર્ચ ટ્રી (Binary Search Tree) એ એક વિશિષ્ટ ડેટા સ્ટ્રક્ચર છે...
+```
+
+---
+
+## 8. Mascot Harmonization
+- Replaced all legacy "Spark-Owl" references with **Aanvi** the winged mascot mark across `SparkOwlMascot.tsx`, `JuniorDashboard.tsx`, `VoiceTutorModal.tsx`, `evaluation/page.tsx`, `settings/page.tsx`, and `backend/app/api/learner.py`.
+- Mascot SVG assets dynamically render from `/brand/aanvi-mark.svg` and `/brand/aanvi-logo-happy.svg`.
+
+---
+
+## 9. Final Test Pass Counts
+
+### A. Backend Pytest (`pytest -v`)
+```text
+tests/test_part_e2_isolation.py::test_auth_enforcement_unauthenticated_returns_401 PASSED [  4%]
+tests/test_part_e2_isolation.py::test_tenant_isolation_user_b_cannot_access_user_a_course PASSED [  8%]
+tests/test_pipeline.py::test_embedding_and_cosine_similarity PASSED      [ 12%]
+tests/test_pipeline.py::test_rag_retrieval_and_exact_grounding PASSED    [ 16%]
+tests/test_pipeline.py::test_unsupported_query_refusal PASSED            [ 20%]
+tests/test_pipeline.py::test_bayesian_knowledge_tracing PASSED           [ 25%]
+tests/test_pipeline.py::test_numerical_question_verification PASSED      [ 29%]
+tests/test_pipeline.py::test_anti_duplication PASSED                     [ 33%]
+tests/test_pipeline.py::test_multimodal_ingestion_parsers PASSED         [ 37%]
+tests/test_pipeline.py::test_diagnostic_evaluation PASSED                [ 41%]
+tests/test_pipeline.py::test_assessment_generation PASSED                [ 45%]
+tests/test_pipeline.py::test_hybrid_bm25_dense_retrieval PASSED          [ 50%]
+tests/test_pipeline.py::test_prerequisite_dag_and_cycle_prevention PASSED [ 54%]
+tests/test_pipeline.py::test_citation_deep_link_lookups PASSED           [ 58%]
+tests/test_pipeline.py::test_safety_moderation_layer PASSED              [ 62%]
+tests/test_pipeline.py::test_controlled_educational_web_search PASSED    [ 66%]
+tests/test_pipeline.py::test_tutor_mode_and_language_adaptation PASSED   [ 70%]
+tests/test_pipeline.py::test_spaced_repetition_forgetting_curve PASSED   [ 75%]
+tests/test_pipeline.py::test_prerequisite_weakness_propagation PASSED    [ 79%]
+tests/test_pipeline.py::test_feynman_mode_evaluation PASSED              [ 83%]
+tests/test_pipeline.py::test_camera_ocr_doubt_solver PASSED              [ 87%]
+tests/test_pipeline.py::test_calendar_ics_export PASSED                  [ 91%]
+tests/test_pipeline.py::test_e2e_integration_flow PASSED                 [ 95%]
+tests/test_pipeline.py::test_generate_subject_path PASSED                [100%]
+================================= 24 passed in 2.90s ==================================
+```
+
+### B. Frontend Unit Tests (`npm test`)
+```text
+▶ Date Bug: Midnight stability and local date consistency
+  ✔ shows identical days left at 00:00:01 and 23:59:59 on the same local day
+  ✔ properly decrements by 1 immediately after midnight crossing
+  ✔ handles exam day (0 days) and past dates properly
+ℹ tests 4 | pass 4 | fail 0
+```
+
+### C. Frontend Typecheck (`tsc --noEmit`)
+```text
+Exit Code: 0 (Zero TypeScript errors)
+```
+
+### D. Playwright E2E Suite (`npx playwright test`)
+```text
+  ok 1 [chromium] › tests\part_a3_cinematic.spec.ts:24:7 › 1. Render Still Frames at 0.5s, 2.0s, 3.5s, 4.5s, 6.0s (Desktop 1280px)
+  ok 2 [chromium] › tests\part_a3_cinematic.spec.ts:78:7 › 2. Render Still Frames on Mobile (390px)
+  ok 3 [chromium] › tests\part_a3_cinematic.spec.ts:109:7 › 3. Multilingual Tagline Sharpness & Translations (English, Hindi, Gujarati)
+  ok 4 [chromium] › tests\part_a3_cinematic.spec.ts:127:7 › 4. Measure Real FPS & Memory Stability (60 fps)
+  ok 5 [chromium] › tests\part_a3_cinematic.spec.ts:141:7 › 5. Verify Core App Routes (all 200 OK, no 404s)
+  ok 6 [chromium] › tests\part_a3_cinematic.spec.ts:150:7 › 6. Measure Audio Synthesis Levels (peak < -1 dB, RMS ~ -18 dB)
+================================= 6 passed in 1.4m ==================================
+```
+
+---
+
+Part E2 is 100% complete and verified. Ready to proceed to **Part F**!

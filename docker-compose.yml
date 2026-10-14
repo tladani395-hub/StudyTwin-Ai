@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: studytwin-db
+    environment:
+      POSTGRES_USER: studytwin
+      POSTGRES_PASSWORD: studytwin_password
+      POSTGRES_DB: studytwin_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U studytwin -d studytwin_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: studytwin-backend
+    environment:
+      DATABASE_URL: postgresql://studytwin:studytwin_password@postgres:5432/studytwin_db
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: studytwin-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

@@ -1,0 +1,23 @@
+<USER_REQUEST>
+PART E2: CLOSE THE GAPS (short, do before Part F)
+
+Do NOT rebuild Part E. Show terminal output for every item.
+
+Auth fallback: in all course, upload, dashboard, quiz and tutor endpoints, remove any “fallback user”. No valid session means 401. Add a test for this.
+Isolation test: user A creates a course and uploads material. User B (and an unauthenticated request) cannot read, list, archive, search or fetch A’s course, units, concepts, mastery, quiz attempts or tutor citations. Show the failing-to-read output for each.
+Real progress: the 4 stages come from a server status (a processing_status field read by polling or SSE), not a timer. Show the status endpoint output changing during a real upload, and the UI error state when ingestion fails.
+Date bug: compute “days left” in one shared function using the user’s local date (not UTC midnight). The card, dashboard and countdown must show the same number. Add a unit test around midnight.
+Delete everywhere: after archiving a course, screenshot the course list, switcher, dashboard, quiz picker, tutor scope, Galaxy and Evaluation, all without the course. Also show the Galaxy and Evaluation pages with a course selected.
+Database is the truth: if the database write fails, roll back the UI and show an error. Reload the page and show the state comes from the database, not localStorage. Also state what “delete” removes (the course’s units, embeddings and mastery) versus only archives, and add a “permanently delete my data” option in Settings.
+Real Hindi test: upload a small Hindi PDF (and a Gujarati one). Print the number of units and concepts created and the language detected. If it fails or is poor, report that plainly.
+Mascot: replace the Spark-Owl and every old logo with the attached moth logo from /brand.
+Show backend, frontend and Playwright pass counts.
+
+Stop and show proof.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-10T14:18:36+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.8 Flash (High) to Gemini 3.7 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

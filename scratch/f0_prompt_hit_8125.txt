@@ -1,0 +1,23 @@
+Created At: 2026-10-10T18:33:20+05:30
+Completed At: 2026-10-10T18:33:20+05:30
+The following changes were made by the replace_file_content tool to: d:\StudyTwin-AI\frontend\app\courses\page.tsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -342,13 +342,8 @@
+             const progressPct = course.progress_pct || 0;
+             const isActive = course.id === activeCourseId;
+ 
+-            // Calculate days left to exam
+-            let daysLeft: number | null = null;
+-            if (course.exam_date) {
+-              const examTime = new Date(course.exam_date).getTime();
+-              const nowTime = new Date().getTime();
+-              daysLeft = Math.ceil((examTime - nowTime) / (1000 * 60 * 60 * 24));
+-            }
++            // Calculate days left to exam using shared local date function
++            const daysLeft: number | null = course.exam_date ? computeDaysLeft(course.exam_date) : null;
+ 
+             return (
+               <motion.div
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

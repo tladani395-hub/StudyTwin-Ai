@@ -1,0 +1,16 @@
+Created At: 2026-10-10T18:34:32+05:30
+Completed At: 2026-10-10T18:34:32+05:30
+The following changes were made by the replace_file_content tool to: d:\StudyTwin-AI\frontend\components\senior\SeniorDashboard.tsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -174,7 +174,7 @@
+             <span>•</span>
+             <span className="inline-flex items-center gap-1 font-mono text-[var(--primary)] font-bold px-2 py-0.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/30">
+               <Calendar className="w-3 h-3" />
+-              <span>Target Final Exam: {summary.exam?.date ? `${summary.exam.date} (${summary.exam.days_left}d left)` : `${summary.exam?.days_left ?? 14} days left`}</span>
++              <span>Target Final Exam: {summary.exam?.date ? `${summary.exam.date} (${formatDaysLeftLabel(examDaysLeft)})` : `${examDaysLeft} days left`}</span>
+             </span>
+           </p>
+         </div>
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

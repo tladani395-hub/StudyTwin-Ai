@@ -1,0 +1,94 @@
+# Part E: Courses Connected Everywhere — Complete & Verified
+
+Every requirement of **PART E: COURSES CONNECTED EVERYWHERE** has been implemented, connected to PostgreSQL 18, and verified through automated Playwright test execution across desktop (1280px), tablet (768px), and mobile (390px) viewports in both **Scholar (Senior)** and **Explorer (Junior)** modes.
+
+---
+
+## 1. What Was Built & Connected
+
+### A. "Add Course" Flow with Multimodal Ingestion Pipeline
+- **Metadata Fields**:
+  - **Course Title / Name**: Real user-defined title input.
+  - **Subject / Discipline**: Target academic domain (e.g. `Genetics & Biotechnology`, `Computer Science`, `Physics`).
+  - **Language of Material**: Selectable localization dropdown (`English`, `हिन्दी (Hindi)`, `ગુજરાતી (Gujarati)`).
+  - **Optional Exam Date**: Datepicker (`YYYY-MM-DD`) driving the dynamic countdown widget.
+  - **Syllabus / Course Description**: Semantic overview.
+  - **Multimodal File Upload**: Supports `.pdf`, `.pptx`, `.mp4`, `.mov`, `.webm` with drag-and-drop.
+- **Live 4-Stage Ingestion Progress Visualizer**:
+  - $\text{Stage 1: Uploaded}$ $\rightarrow$ Persists course record and validates syllabus asset.
+  - $\text{Stage 2: Transcribed / Extracted}$ $\rightarrow$ Extracts semantic text chunks, timestamps, and page anchors.
+  - $\text{Stage 3: Split into Units}$ $\rightarrow$ Vectorizes semantic content units using text embeddings.
+  - $\text{Stage 4: Concepts Discovered}$ $\rightarrow$ Automatically generates Knowledge Graph concept nodes and initializes Bayesian Knowledge Tracing (BKT) learner mastery states ($p\_know = 0.5$).
+- **PostgreSQL 18 Persistence**:
+  - Creates record in `courses` table and immediate user enrollment in `course_enrollments`.
+  - Enforces user isolation so operations only affect enrolled courses.
+
+### B. Courses Connected Everywhere (Zero Full-Page Reload)
+- **Global Store Sync (`useCourseStore.ts`)**:
+  - `createCourse`, `deleteCourse`, and `setActiveCourseId` update client Zustand state, `localStorage`, and PostgreSQL 18 asynchronously with **zero full-page reload**.
+- **Header Course Switcher (`CourseSwitcher.tsx`)**:
+  - Displays enrolled courses count, current active course title, and live BKT mastery percentages.
+  - Switching courses re-scopes the application instantly.
+- **Dashboard (`/dashboard`) Scoped to Active Course**:
+  - **Scholar Mode (`SeniorDashboard.tsx`)**: Displays real Bayesian Knowledge Tracing ($p\_know$) mastery, weak topic blockers with DAG prerequisite alerts, spaced repetition forgetting curves ($R(t) = e^{-t/S}$), and a dynamic **Exam Countdown Pill** (`Target Final Exam: [date] ([days]d left)`).
+  - **Explorer Mode (`JuniorDashboard.tsx`)**: Island Archipelago map, stars, and quest progress dynamically scope to the active course.
+- **Adaptive Quiz Page (`/assessment`)**:
+  - Features a top-level **Course Picker** synced to `activeCourseId`.
+  - Target curriculum topics dynamically reload to that course's discovered concepts.
+- **Grounded Tutor (`/tutor`)**:
+  - Answer scope defaults to the active course.
+  - Includes a global toggle: *"Ask across all my courses"* (`all_courses: true`), retrieving chunks across all enrolled courses when enabled.
+- **Course Galaxy (`/knowledge-map`) & Evaluation (`/evaluation`)**:
+  - Scoped to the active course with scope chips and targeted citation filters.
+
+### C. Delete / Archive Course Flow
+- **Course Card Action**: Red trash icon on course cards opens a confirmation dialog: *"Archive Course? This course will be archived and unenrolled."*
+- **Database & State Updates**: Calls `DELETE /api/courses/{course_id}`, marks `is_archived = True`, and removes `course_enrollments`.
+- The card vanishes from the Course list, Header switcher, Dashboard, and Quiz picker **immediately without full-page reload**.
+
+---
+
+## 2. Visual Proof Gallery
+
+All screenshot artifacts were captured during the automated test run:
+
+| Screenshot Artifact | Description |
+| :--- | :--- |
+| [part_e_courses_desktop_1280px.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_courses_desktop_1280px.png) | Scholar Courses repository at 1280px showing active cohort classes, enrolled courses, and "Add Course" trigger. |
+| [part_e_add_course_modal_open.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_add_course_modal_open.png) | Add Course modal with Title, Subject, Language (`हिन्दी`), Exam Date (`2026-11-28`), Syllabus PDF upload, and description. |
+| [part_e_ingestion_pipeline_progress.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_ingestion_pipeline_progress.png) | Live 4-stage ingestion progress visualizer showing Stage 2 extraction and processing stepper. |
+| [part_e_courses_new_course_added.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_courses_new_course_added.png) | Newly ingested course card appearing instantly with `ACTIVE` chip, Hindi language badge, 4 discovered topics, and `49 days left` countdown. |
+| [part_e_dashboard_scoped_new_course.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_dashboard_scoped_new_course.png) | Scholar Dashboard scoped to new course with live **`Target Final Exam: 2026-11-28 (48d left)`** countdown pill and BKT mastery metrics. |
+| [part_e_course_switcher_zero_reload.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_course_switcher_zero_reload.png) | Header Course Switcher dropdown showing enrolled courses, active status checkmark, and quick switch actions without reload. |
+| [part_e_quiz_course_picker_topics.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_quiz_course_picker_topics.png) | Verified Course Assessments page with course picker dropdown and dynamic curriculum topics synced to active course concepts. |
+| [part_e_tutor_scope_and_allcourses_toggle.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_tutor_scope_and_allcourses_toggle.png) | Grounded Tutor page showing active course scope banner and *"☑ Ask across all my courses"* toggle with exact PDF citations. |
+| [part_e_delete_course_confirmation_modal.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_delete_course_confirmation_modal.png) | Confirmation modal warning that the course will be archived and unenrolled without full page reload. |
+| [part_e_course_deleted_vanished_zero_reload.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_course_deleted_vanished_zero_reload.png) | Course repository after confirming removal: archived course vanished instantly, switcher re-selected next course seamlessly. |
+| [part_e_courses_tablet_768px.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_courses_tablet_768px.png) | Responsive layout verified on Tablet (768px). |
+| [part_e_courses_mobile_390px.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_courses_mobile_390px.png) | Mobile viewport (390px) with responsive card stacking, touch-friendly buttons, and horizontal navigation scrolling. |
+| [part_e_explorer_dashboard_scoped.png](file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_e_explorer_dashboard_scoped.png) | Explorer Mode (Junior) Dashboard scoped to active course with Spark-Owl learning companion and Island Archipelago. |
+
+---
+
+## 3. Backend & Frontend Code Verification Summary
+
+1. [`backend/app/api/courses.py`](file:///d:/StudyTwin-AI/backend/app/api/courses.py):
+   - `POST /api/courses/`: Creates course, handles user fallback cleanly, persists metadata (`exam_date`, `language`, `subject`), and auto-enrolls user.
+   - `DELETE /api/courses/{course_id}` & `PATCH /api/courses/{course_id}/archive`: Soft-archives course, clears enrollments, and cascades to active course selection.
+   - `GET /api/courses/` & `GET /api/courses/enrolled`: Filter `is_archived.isnot(True)` and compute real BKT mastery from `mastery_states`.
+2. [`backend/app/api/documents.py`](file:///d:/StudyTwin-AI/backend/app/api/documents.py):
+   - `POST /api/documents/upload`: Sets `user_id`, processes `.pdf`/`.pptx`/`.mp4` into `ContentUnit` embeddings, discovers concepts, and initializes BKT `MasteryState` records for all enrolled students.
+3. [`backend/app/database/models.py`](file:///d:/StudyTwin-AI/backend/app/database/models.py):
+   - Compatibility properties and setters added across `CourseMaterial` (`source_type`, `total_duration_sec`) and `MasteryState` (`topic_id`, `mastery_score`, `last_updated`).
+4. [`frontend/stores/useCourseStore.ts`](file:///d:/StudyTwin-AI/frontend/stores/useCourseStore.ts):
+   - Full implementation of `createCourse` with 4-stage callback, `deleteCourse`, `archiveCourse`, and instant optimistic state updates without full-page reloads.
+5. [`frontend/app/courses/page.tsx`](file:///d:/StudyTwin-AI/frontend/app/courses/page.tsx):
+   - Add Course modal with live 4-stage pipeline stepper and delete confirmation dialog with immediate card unmounting.
+6. [`frontend/components/senior/SeniorDashboard.tsx`](file:///d:/StudyTwin-AI/frontend/components/senior/SeniorDashboard.tsx) & [`JuniorDashboard.tsx`](file:///d:/StudyTwin-AI/frontend/components/junior/JuniorDashboard.tsx):
+   - Active course scoping and dynamic `Target Final Exam: [date] ([days]d left)` countdown chip.
+7. [`frontend/app/assessment/page.tsx`](file:///d:/StudyTwin-AI/frontend/app/assessment/page.tsx):
+   - Top-level Course Picker and dynamic curriculum topic synchronization.
+8. [`frontend/components/SplitScreenRAG.tsx`](file:///d:/StudyTwin-AI/frontend/components/SplitScreenRAG.tsx) & [`Chat.tsx`](file:///d:/StudyTwin-AI/frontend/components/Chat.tsx):
+   - Scope banner and *"Ask across all my courses"* toggle.
+
+Part E is complete, fully integrated across the stack, and verified with zero full-page reloads.

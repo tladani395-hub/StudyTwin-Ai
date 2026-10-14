@@ -1,0 +1,24 @@
+Created At: 2026-10-10T18:33:11+05:30
+Completed At: 2026-10-10T18:33:11+05:30
+File Path: `file:///d:/StudyTwin-AI/frontend/app/courses/page.tsx`
+Total Lines: 888
+Total Bytes: 40701
+Showing lines 435 to 450
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+435: 
+436:                   {/* Exam Countdown Chip */}
+437:                   {course.exam_date && (
+438:                     <div className="px-3 py-1.5 rounded-btn bg-bg-app border border-border-subtle flex items-center justify-between text-xs font-mono">
+439:                       <div className="flex items-center gap-1.5 text-text-muted">
+440:                         <Calendar className="w-3.5 h-3.5 text-primary" />
+441:                         <span>Exam: {course.exam_date}</span>
+442:                       </div>
+443:                       <span className={`font-bold ${daysLeft !== null && daysLeft <= 14 ? 'text-amber-500' : 'text-primary'}`}>
+444:                         {daysLeft !== null ? (daysLeft > 0 ? `${daysLeft} days left` : 'Exam today!') : 'Scheduled'}
+445:                       </span>
+446:                     </div>
+447:                   )}
+448: 
+449:                   {/* BKT Mastery & Curriculum Progress Stats */}
+450:                   <div className="p-3.5 rounded-2xl bg-bg-app border border-border-subtle space-y-2.5">
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

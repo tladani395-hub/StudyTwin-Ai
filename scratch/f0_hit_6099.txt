@@ -1,0 +1,36 @@
+Created At: 2026-10-09T23:43:32+05:30
+Completed At: 2026-10-09T23:43:36+05:30
+
+The command exited with code 0.
+Output:
+PART E: COURSES CONNECTED EVERYWHERE
+“Add course”: name, subject, language of the material, and optional exam date. Then upload video, PDF or slides (existing ingestion). Show real processing progress (uploaded, transcribed, split into units, concepts found).
+When a course is added or processed, it appears immediately (no reload) on:
+the course list and the course switcher
+the dashboard (mastery, weak topics, map or galaxy, due reviews, exam countdown)
+the quiz page (a course picker, plus topic selection from that course’s concepts)
+the tutor (the answer scope is the selected course, with a “Ask across all my courses” option)
+the Galaxy view and the evaluation scope
+Deleting or archiving a course removes it from all of these, with a confirm dialog. Courses belong to one user (or one class), and isolation is tested.
+Test: add a course, then confirm it shows on the dashboard, quiz and tutor; delete it, and confirm it disappears everywhere.
+PART F: THREE LANGUAGES: ENGLISH, HINDI (हिन्दी), GUJARATI (ગુજરાતી)
+
+Not Hinglish. Use real scripts.
+
+UI translation: i18next with en, hi, gu files. Every label, button, error, empty state, email template, mascot line and quiz timer message is translated. No hard-coded strings. A test fails the build if a key is missing in any language. Have a native speaker review the strings, and mark in the docs which translations are unreviewed.
+Language choice: set at signup and changeable anywhere. Saved in users.language and user_settings, and restored on login.
+AI answers in the user’s language (this is the main rule):
+Detect the language of each message (Devanagari script means Hindi, Gujarati script means Gujarati, otherwise English). The detected language overrides the setting for that reply, so a person can switch mid-chat.
+If the user types Hindi or Gujarati in English letters, reply in the proper script (Devanagari or Gujarati), not Hinglish.
+Tutor answers, quiz questions, options, explanations, feedback, the “Why this question?” line, grounding chips and the post-quiz report are all generated in that language.
+Technical terms: write the native term, with the English term in brackets the first time, for example "द्विआधारी खोज (Binary Search)".
+Math and code stay in standard notation (KaTeX, code blocks).
+Retrieval across languages: use a multilingual embedding model (for example bge-m3 or multilingual-e5) so a Hindi question can find English course material and the reverse. Citations still point to the original source page or timestamp. Say in the answer when the source is in another language.
+Voice and camera: faster-whisper with language auto-detect (hi, gu, en); TTS voices for all three languages (flag clearly if a voice is not available); OCR with the Devanagari and Gujarati packs (Tesseract hin, guj) for “Snap a question”.
+Safety in all three languages: moderation, self-harm response, prompt-injection tests and the refusal (“This isn’t covered in your material”) all work and are translated. Add test cases in Hindi and Gujarati.
+Fonts: Baloo 2 (supports Devanagari) and Baloo Bhai 2 (Gujarati) for Explorer headings; Noto Sans Devanagari / Noto Sans Gujarati for body and Scholar. Check that no text is clipped, since Devanagari and Gujarati need more line height.
+Evaluation: add 20 Hindi and 20 Gujarati questions to the test set and report faithfulness, citation accuracy and refusal accuracy per language on the /evaluation page. Report honestly where Hindi or Gujarati is weaker.
+Proof: screenshots of the same chat answered in English, Hindi and Gujarati, a quiz in each language, and the language tests passing.
+PART G: DASHBOARD AND QUIZ CONNECTION CHECK
+Taking a quiz in any language updates mastery, XP, streak, due reviews and weak topics for that course, and the dashboard refreshes without a reload.
+The dashboards, galaxy and evaluation pages show

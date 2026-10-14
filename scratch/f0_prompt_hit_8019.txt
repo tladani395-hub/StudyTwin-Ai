@@ -1,0 +1,373 @@
+# Resuming from a compaction
+
+You are continuing work on the task described above, but you have lost access to the full conversation history, and need to resume work efficiently using the progress summary below:
+
+# User Requests
+The following were user requests from the truncated conversation in chronological order:
+1. ok complte last prompt?
+2. a winged, moth-like body in a kite or shield shape
+two curled antennae crossing at the top
+a glowing orange orb as the head or eye
+two pink cheek dots and a small smile
+a coral-to-purple gradient outline, set in a rounded-square tile
+
+The two pictures differ a little. The first has the glowing orb. The second has closed happy eyes and a smile. I only have small thumbnails, so your AI tool needs the original high-resolution files, ideally SVG or PNG with a transparent background.
+
+Paste this as Part A5. It replaces the logo in A4 and keeps the rest of A4 (the 404 fix, the scene, sound and proof).
+
+PART A5: USE THE REAL AANVI LOGO IN 3D
+
+Attach the original logo files (both versions) to this prompt. Do NOT redesign, redraw from imagination, or replace the logo with an A, an owl, or a stick figure. The logo is the attached winged mascot mark: a moth-like body, two curled antennae, a glowing orb head, cheek dots, a smile, and a coral-to-purple gradient outline.
+
+STEP 1: Prepare the logo
+Trace the attached logo
+<truncated 2642 bytes>
+3. ok now b
+4. ok part c
+5. YES SSTART D
+6.  
+7. ok start E
+8. PART E2: CLOSE THE GAPS (short, do before Part F)
+
+Do NOT rebuild Part E. Show terminal output for every item.
+
+Auth fallback: in all course, upload, dashboard, quiz and tutor endpoints, remove any “fallback user”. No valid session means 401. Add a test for this.
+Isolation test: user A creates a course and uploads material. User B (and an unauthenticated request) cannot read, list, archive, search or fetch A’s course, units, concepts, mastery, quiz attempts or tutor citations. Show the failing-to-read output for each.
+Real progress: the 4 stages come from a server status (a processing_status field read by polling or SSE), not a timer. Show the status endpoint output changing during a real upload, and the UI error state when ingestion fails.
+Date bug: compute “days left” in one shared function using the user’s local date (not UTC midnight). The card, dashboard and countdown must show the same number. Add a unit test around midnight.
+Delete everywhere: after archiving a course, screenshot the cou
+<truncated 850 bytes>
+
+<summary>
+### 1. Task Overview
+- **Goal**: Complete **PART E2: CLOSE THE GAPS** (prerequisite before Part F).
+- **Core Directives & Boundaries**:
+  - Do **NOT** rebuild Part E.
+  - Display live terminal output for every item.
+  - **Item 1 (Auth Fallback)**: Remove any fallback user (`db.query(User).first()`, hardcoded IDs) across all course (`/courses/*`), upload (`/documents/*`), dashboard (`/dashboard/*`), quiz (`/assessments/*`), and tutor (`/tutor/*`) endpoints. No valid session = 401. Automated tests required.
+  - **Item 2 (Isolation Test)**: User A creates a course and uploads materials. User B and unauthenticated requests must be blocked (401/403) from reading, listing, archiving, deleting, searching, or fetching A's course, units, concepts, mastery, quiz attempts, and tutor citations. Show failing terminal output for each.
+  - **Item 3 (Real Ingestion Progress)**: 4 stages must reflect real server status (`processing_status` via polling/SSE), not client `setTimeout`. Show status endpoint output changing during real upload and UI error state when ingestion fails.
+  - **Item 4 (Date Bug)**: Shared function `computeDaysLeft` using user's local date (not UTC midnight). Card, dashboard, and countdown must show the same number. Add unit test around midnight (23:59:59 vs 00:00:01).
+  - **Item 5 (Delete Everywhere Proof)**: After archiving a course, capture screenshots verifying removal across course list, header switcher, dashboard, quiz picker, tutor scope, Galaxy (`/knowledge-map`), and Evaluation (`/evaluation`). Also capture Galaxy and Evaluation with an active course selected.
+  - **Item 6 (Database Single Source of Truth)**: If a DB write fails, roll back UI and display error. On page reload, fetch state directly from DB (not stale localStorage). Differentiate soft archive vs hard delete (`DELETE /courses/{id}/hard`). Add "permanently delete my data" option in Settings (`/settings`).
+  - **Item 7 (Real Hindi & Gujarati Ingestion)**: Ingest actual Hindi and Gujarati PDFs. Output number of units and concepts discovered and detected language to terminal.
+  - **Item 8 (Mascot Harmonization)**: Replace any "Spark-Owl" references with Aanvi the winged mascot mark from `/brand`.
+  - **Item 9 (Test Pass Counts)**: Output backend (pytest), frontend (jest/tsc), and Playwright test counts and proof.
+
+---
+
+### 2. Progress
+- **Item 1 & 2 Completed & Verified**:
+  - Created `backend/app/auth/dependencies.py` with `get_current_user` enforcing session tokens (`Authorization: Bearer <token>`, `X-Session-Token`, or cookie `aanvi_access_token`) against PostgreSQL `UserSession` table. Unauthenticated/invalid sessions return `401 Unauthorized`.
+  - Updated all 5 API files to inject `current_user: User = Depends(get_current_user)` and removed all fallback users:
+    - `backend/app/api/auth.py`: `/me` now strictly uses `current_user`.
+    - `backend/app/api/courses.py`: `list_courses`, `create_course`, `get_course_detail`, `archive_course`, `delete_course`, `hard_delete_course`, `join_class`, `get_enrolled_courses`, `generate_subject_path`.
+    - `backend/app/api/documents.py`: `upload_document`, `get_documents_by_course`, `get_document_status`.
+    - `backend/app/api/dashboard.py`: `get_dashboard_summary`, `get_dashboard_map`.
+    - `backend/app/api/assessments.py`: `create_assessment`, `get_assessment`, `submit_answer`.
+    - `backend/app/api/tutor.py`: `query_tutor` (RAG retrieval scoped strictly to user's enrolled/owned courses).
+    - `backend/app/rag/hybrid.py`: Added `allowed_course_ids` parameter to ensure vector/BM25 retrieval never leaks another user's materials.
+  - Created and ran test suite `backend/tests/test_part_e2_isolation.py`:
+    - **`test_auth_enforcement_unauthenticated_returns_401` PASSED** (401 across all 8 endpoints).
+    - **`test_tenant_isolation_user_b_cannot_access_user_a_course` PASSED** (User B blocked with 403 on ID fetch, archiving, deleting, hard-deleting, document listing, quiz generation, tutor querying; course excluded from User B's list; 401 on anonymous access; User A hard-delete cleanup succeeded).
+- **Item 3 (Real Ingestion Progress) Implementation**:
+  - `backend/app/api/documents.py`: `upload_document` and `get_document_status` now track and expose 4 real server stages (`uploaded` $\rightarrow$ `extracting` $\rightarrow$ `indexing` $\rightarrow$ `completed` / `failed`).
+  - `frontend/stores/useCourseStore.ts`: Replaced client `setTimeout` timer with real polling of `${API_BASE}/documents/${id}/status` and error propagation.
+  - `frontend/app/courses/page.tsx`: Added `ingestionError` state and error banner UI component in the modal.
+  - Created scratch script `d:\StudyTwin-AI\scratch\test_real_ingestion_progress.py`.
+
+---
+
+### 3. Key Findings & Resolutions
+- **PostgreSQL Connectivity**:
+  - PostgreSQL 18 is running inside WSL Ubuntu (`172.17.43.201:5432`, DB: `studytwin_db`, user: `studytwin`).
+  - To start postgres in WSL without password hanging, use `wsl -d Ubuntu -u root -- service postgresql start`.
+  - Python proxy on port 5432 inside WSL routes to local PostgreSQL port 5431.
+- **Seeded Session Tokens**:
+  - Scholar: `session_token_scholar_live` $\rightarrow$ `u-scholar-0001-0000-000000000001`
+  - Explorer: `session_token_explorer_live` $\rightarrow$ `u-explorer-0002-0000-000000000002`
+
+---
+
+### 4. Active Context
+- **Servers Running**:
+  - Backend: `uvicorn app.main:app --port 8000 --host 0.0.0.0` (task-7949).
+  - Frontend: Next.js on port 3000 (task-7953).
+- **Workspace**: `d:\StudyTwin-AI`
+- **Artifacts Path**: `C:\Users\Tirth\.gemini\antigravity\brain\b57d341f-3178-41ff-865e-6f1f32d21ba5`
+
+---
+
+### 5. Next Steps (In Priority Order)
+
+1. **Execute Real Ingestion Terminal Proof (Item 3)**:
+   - Run `.\venv\Scripts\python d:\StudyTwin-AI\scratch\test_real_ingestion_progress.py` to capture live terminal output of stage transitions (1 $\rightarrow$ 2 $\rightarrow$ 3 $\rightarrow$ 4) and simulated `failed` error output.
+2. **Implement Date Bug Fix & Midnight Unit Test (Item 4)**:
+   - Create `frontend/lib/dateUtils.ts` containing shared `computeDaysLeft(targetDateStr: string, now?: Date): number` normalizing to local year/month/day.
+   - Use `computeDaysLeft` in `frontend/app/courses/page.tsx` and `SeniorDashboard.tsx`.
+   - Create Jest test `frontend/__tests__/dateUtils.test.ts` verifying identical countdown at 23:59:59 and 00:00:01 across midnight. Run `npm test` and show terminal output.
+3. **Database Single Source of Truth & Hard Delete (Item 6)**:
+   - Ensure frontend store rolls back state on network error.
+   - Add "Permanently Delete My Data" cascade button in `frontend/app/settings/page.tsx` that calls `DELETE /api/auth/delete-account` or `/api/auth/delete-my-data`.
+4. **Real Hindi & Gujarati PDF Ingestion (Item 7)**:
+   - Create authentic Hindi PDF (`d:\StudyTwin-AI\scratch\hindi_sample.pdf`) and Gujarati PDF (`d:\StudyTwin-AI\scratch\gujarati_sample.pdf`).
+   - Run ingestion via backend script, printing extracted units, concepts, and detected language to the terminal.
+5. **Mascot Harmonization (Item 8)**:
+   - Search and replace any "Spark-Owl" references across frontend and backend with Aanvi (winged mascot mark from `/brand/aanvi-mark.svg`).
+6. **Capture Proof Screenshots (Item 5)**:
+   - Archive a course and capture screenshots verifying disappearance across: Course list, Header switcher, Dashboard, Quiz picker, Tutor scope, Galaxy (`/knowledge-map`), and Evaluation (`/evaluation`).
+   - Capture screenshots of Galaxy and Evaluation with an active course selected.
+7. **Final Test Pass Counts (Item 9)**:
+   - Run backend pytest (`pytest`), frontend tests (`npm test` / `tsc --noEmit`), and Playwright test suite, displaying full terminal test pass counts.
+</summary>
+
+You have the 108 following artifacts written to the artifacts directory:
+
+[ARTIFACT: media_1791381690489]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/.user_uploaded/media_1791381690489.png
+Last Edited: 2026-10-07T14:02:15Z
+
+[ARTIFACT: media_1791381704785]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/.user_uploaded/media_1791381704785.png
+Last Edited: 2026-10-07T14:02:15Z
+
+[ARTIFACT: media_1791381713562]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/.user_uploaded/media_1791381713562.png
+Last Edited: 2026-10-07T14:02:15Z
+
+[ARTIFACT: media_1791381723170]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/.user_uploaded/media_1791381723170.png
+Last Edited: 2026-10-07T14:02:15Z
+
+[ARTIFACT: media_1791381729596]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/.user_uploaded/media_1791381729596.png
+Last Edited: 2026-10-07T14:02:15Z
+
+[ARTIFACT: 01_enter_screen_en_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/01_enter_screen_en_1280px.png
+Last Edited: 2026-10-09T08:00:32Z
+
+[ARTIFACT: 01_enter_screen_gu_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/01_enter_screen_gu_1280px.png
+Last Edited: 2026-10-09T08:00:33Z
+
+[ARTIFACT: 01_enter_screen_hi_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/01_enter_screen_hi_1280px.png
+Last Edited: 2026-10-09T08:00:32Z
+
+[ARTIFACT: 02_stage0_starfield_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/02_stage0_starfield_1280px.png
+Last Edited: 2026-10-09T08:00:36Z
+
+[ARTIFACT: 03_stage1_constellation_gathering_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/03_stage1_constellation_gathering_1280px.png
+Last Edited: 2026-10-09T08:00:37Z
+
+[ARTIFACT: 04_stage2_3d_orbit_lock_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/04_stage2_3d_orbit_lock_1280px.png
+Last Edited: 2026-10-09T08:00:38Z
+
+[ARTIFACT: 05_stage3_typography_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/05_stage3_typography_1280px.png
+Last Edited: 2026-10-09T08:00:40Z
+
+[ARTIFACT: 06_stage4_tagline_sparkles_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/06_stage4_tagline_sparkles_1280px.png
+Last Edited: 2026-10-09T08:00:41Z
+
+[ARTIFACT: 07_skip_button_visible]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/07_skip_button_visible.png
+Last Edited: 2026-10-09T08:00:43Z
+
+[ARTIFACT: 08_post_skip_destination]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/08_post_skip_destination.png
+Last Edited: 2026-10-09T08:00:44Z
+
+[ARTIFACT: 09_reduced_motion_fallback]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/09_reduced_motion_fallback.png
+Last Edited: 2026-10-09T08:00:45Z
+
+[ARTIFACT: aanvi-logo-1024]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/aanvi-logo-1024.png
+Last Edited: 2026-10-09T13:16:11Z
+
+[ARTIFACT: aanvi_intro_waveform]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/aanvi_intro_waveform.svg
+Last Edited: 2026-10-09T07:46:20Z
+
+[ARTIFACT: architecture_inspector]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/architecture_inspector.png
+Last Edited: 2026-10-08T16:22:41Z
+
+[ARTIFACT: auth_forgot_password_desktop]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_forgot_password_desktop.png
+Last Edited: 2026-10-09T17:33:03Z
+
+[ARTIFACT: auth_forgot_password_submitted]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_forgot_password_submitted.png
+Last Edited: 2026-10-09T17:33:04Z
+
+[ARTIFACT: auth_login_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_login_desktop_1280px.png
+Last Edited: 2026-10-09T17:32:56Z
+
+[ARTIFACT: auth_login_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_login_mobile_390px.png
+Last Edited: 2026-10-09T17:33:00Z
+
+[ARTIFACT: auth_login_showpw_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_login_showpw_desktop_1280px.png
+Last Edited: 2026-10-09T17:32:56Z
+
+[ARTIFACT: auth_login_showpw_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_login_showpw_mobile_390px.png
+Last Edited: 2026-10-09T17:33:01Z
+
+[ARTIFACT: auth_login_showpw_tablet_768px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_login_showpw_tablet_768px.png
+Last Edited: 2026-10-09T17:32:59Z
+
+[ARTIFACT: auth_login_tablet_768px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_login_tablet_768px.png
+Last Edited: 2026-10-09T17:32:58Z
+
+[ARTIFACT: auth_parent_zone_consent_confirmed]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_parent_zone_consent_confirmed.png
+Last Edited: 2026-10-09T17:33:08Z
+
+[ARTIFACT: auth_reset_password_with_token]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_reset_password_with_token.png
+Last Edited: 2026-10-09T17:33:06Z
+
+[ARTIFACT: auth_signup_explorer_minor_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_explorer_minor_desktop_1280px.png
+Last Edited: 2026-10-09T17:32:48Z
+
+[ARTIFACT: auth_signup_explorer_minor_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_explorer_minor_mobile_390px.png
+Last Edited: 2026-10-09T17:32:54Z
+
+[ARTIFACT: auth_signup_explorer_minor_tablet_768px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_explorer_minor_tablet_768px.png
+Last Edited: 2026-10-09T17:32:51Z
+
+[ARTIFACT: auth_signup_initial_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_initial_desktop_1280px.png
+Last Edited: 2026-10-09T17:32:47Z
+
+[ARTIFACT: auth_signup_initial_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_initial_mobile_390px.png
+Last Edited: 2026-10-09T17:32:53Z
+
+[ARTIFACT: auth_signup_initial_tablet_768px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_initial_tablet_768px.png
+Last Edited: 2026-10-09T17:32:50Z
+
+[ARTIFACT: auth_signup_scholar_adult_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_scholar_adult_desktop_1280px.png
+Last Edited: 2026-10-09T17:32:48Z
+
+[ARTIFACT: auth_signup_scholar_adult_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_scholar_adult_mobile_390px.png
+Last Edited: 2026-10-09T17:32:54Z
+
+[ARTIFACT: auth_signup_scholar_adult_tablet_768px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/auth_signup_scholar_adult_tablet_768px.png
+Last Edited: 2026-10-09T17:32:51Z
+
+[ARTIFACT: estimation_error]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/estimation_error.png
+Last Edited: 2026-10-08T16:09:09Z
+
+[ARTIFACT: evaluation_explorer]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/evaluation_explorer.png
+Last Edited: 2026-10-08T16:22:44Z
+
+[ARTIFACT: evaluation_scholar]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/evaluation_scholar.png
+Last Edited: 2026-10-08T16:22:43Z
+
+[ARTIFACT: explorer_dark_pal_a]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/explorer_dark_pal_a.png
+Last Edited: 2026-10-08T15:54:00Z
+
+[ARTIFACT: explorer_dark_pal_b]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/explorer_dark_pal_b.png
+Last Edited: 2026-10-08T15:54:01Z
+
+[ARTIFACT: explorer_empty_state]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/explorer_empty_state.png
+Last Edited: 2026-10-08T15:54:07Z
+
+[ARTIFACT: explorer_light_pal_a]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/explorer_light_pal_a.png
+Last Edited: 2026-10-08T15:54:03Z
+
+[ARTIFACT: explorer_light_pal_b]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/explorer_light_pal_b.png
+Last Edited: 2026-10-08T15:54:04Z
+
+[ARTIFACT: favicon-32]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/favicon-32.png
+Last Edited: 2026-10-09T13:16:11Z
+
+[ARTIFACT: frame_0.5s_desktop]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_0.5s_desktop.png
+Last Edited: 2026-10-09T13:01:41Z
+
+[ARTIFACT: frame_2.0s_desktop]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_2.0s_desktop.png
+Last Edited: 2026-10-09T13:01:46Z
+
+[ARTIFACT: frame_2.0s_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_2.0s_mobile_390px.png
+Last Edited: 2026-10-09T13:02:16Z
+
+[ARTIFACT: frame_3.5s_desktop]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_3.5s_desktop.png
+Last Edited: 2026-10-09T13:01:51Z
+
+[ARTIFACT: frame_3.5s_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_3.5s_mobile_390px.png
+Last Edited: 2026-10-09T13:02:18Z
+
+[ARTIFACT: frame_4.5s_desktop]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_4.5s_desktop.png
+Last Edited: 2026-10-09T13:01:56Z
+
+[ARTIFACT: frame_6.0s_desktop]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_6.0s_desktop.png
+Last Edited: 2026-10-09T13:02:02Z
+
+[ARTIFACT: frame_6.0s_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_6.0s_mobile_390px.png
+Last Edited: 2026-10-09T13:02:21Z
+
+[ARTIFACT: frame_enter_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_enter_desktop_1280px.png
+Last Edited: 2026-10-09T13:01:31Z
+
+[ARTIFACT: frame_enter_mobile_390px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/frame_enter_mobile_390px.png
+Last Edited: 2026-10-09T13:02:10Z
+
+[ARTIFACT: overlay_mascot_comparison]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/overlay_mascot_comparison.png
+Last Edited: 2026-10-09T13:16:11Z
+
+[ARTIFACT: part_d_courses_desktop_1280px]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_d_courses_desktop_1280px.png
+Last Edited: 2026-10-09T18:11:00Z
+
+[ARTIFACT: part_d_courses_empty_state]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_d_courses_empty_state.png
+Last Edited: 2026-10-09T18:10:57Z
+
+[ARTIFACT: part_d_courses_join_invalid]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_d_courses_join_invalid.png
+Last Edited: 2026-10-09T18:11:10Z
+
+[ARTIFACT: part_d_courses_join_modal]
+Path: file:///C:/Users/Tirth/.gemini/antigravity/brain/b57d341f-3178-41ff-865e-6f1f32d21ba5/part_d_courses_join_mod
+---
+The checkpoint summary has been truncated due to hitting max length. Please see the conversation log file for the full conversation.

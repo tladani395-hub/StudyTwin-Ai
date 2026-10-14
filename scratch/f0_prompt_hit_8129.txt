@@ -1,0 +1,16 @@
+Created At: 2026-10-10T18:33:29+05:30
+Completed At: 2026-10-10T18:33:29+05:30
+The following changes were made by the replace_file_content tool to: d:\StudyTwin-AI\frontend\app\courses\page.tsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -437,7 +437,7 @@
+                         <span>Exam: {course.exam_date}</span>
+                       </div>
+                       <span className={`font-bold ${daysLeft !== null && daysLeft <= 14 ? 'text-amber-500' : 'text-primary'}`}>
+-                        {daysLeft !== null ? (daysLeft > 0 ? `${daysLeft} days left` : 'Exam today!') : 'Scheduled'}
++                        {daysLeft !== null ? formatDaysLeftLabel(daysLeft) : 'Scheduled'}
+                       </span>
+                     </div>
+                   )}
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.

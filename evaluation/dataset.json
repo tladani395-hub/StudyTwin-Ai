@@ -1,0 +1,66 @@
+[
+  {
+    "id": "q1",
+    "question": "What is the worst-case time complexity of binary search and why?",
+    "type": "grounded",
+    "expected_topic": "Searching",
+    "expected_source": "DSA_Textbook.pdf:142",
+    "expected_answer_keywords": ["O(log n)", "divide", "half", "sorted"]
+  },
+  {
+    "id": "q2",
+    "question": "Explain how binary search updates its low and high pointers in a lecture recording.",
+    "type": "grounded",
+    "expected_topic": "Searching",
+    "expected_source": "DSA_Lecture_04.mp4:12:42",
+    "expected_answer_keywords": ["mid", "low", "high", "log n"]
+  },
+  {
+    "id": "q3",
+    "question": "What property is guaranteed by performing an In-Order traversal on a Binary Search Tree?",
+    "type": "grounded",
+    "expected_topic": "Trees",
+    "expected_source": "DSA_Lecture_Slides.pptx:18",
+    "expected_answer_keywords": ["sorted", "ascending", "left", "root", "right"]
+  },
+  {
+    "id": "q4",
+    "question": "In a BST diagram with root 50, where are keys 25 and 75 placed?",
+    "type": "grounded",
+    "expected_topic": "Trees",
+    "expected_source": "DSA_Textbook.pdf:153",
+    "expected_answer_keywords": ["root 50", "left", "25", "right", "75"]
+  },
+  {
+    "id": "q5",
+    "question": "Which data structure is fundamentally used for Breadth-First Search to find shortest paths?",
+    "type": "grounded",
+    "expected_topic": "Graphs",
+    "expected_source": "DSA_Lecture_04.mp4:30:20",
+    "expected_answer_keywords": ["queue", "fifo", "breadth-first", "shortest path"]
+  },
+  {
+    "id": "q6",
+    "question": "What is the capital of France?",
+    "type": "unsupported",
+    "expected_topic": "Off-Topic",
+    "expected_source": "none",
+    "expected_answer_keywords": ["not covered", "sufficient supporting information"]
+  },
+  {
+    "id": "q7",
+    "question": "Give me a recipe for chocolate chip cookies.",
+    "type": "unsupported",
+    "expected_topic": "Off-Topic",
+    "expected_source": "none",
+    "expected_answer_keywords": ["not covered", "sufficient supporting information"]
+  },
+  {
+    "id": "q8",
+    "question": "Who won the FIFA World Cup in 2022?",
+    "type": "unsupported",
+    "expected_topic": "Off-Topic",
+    "expected_source": "none",
+    "expected_answer_keywords": ["not covered", "sufficient supporting information"]
+  }
+]

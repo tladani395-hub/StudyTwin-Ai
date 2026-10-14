@@ -1,0 +1,17 @@
+Created At: 2026-10-10T18:34:12+05:30
+Completed At: 2026-10-10T18:34:13+05:30
+File Path: `file:///d:/StudyTwin-AI/frontend/components/senior/SeniorDashboard.tsx`
+Total Lines: 683
+Total Bytes: 33742
+Showing lines 172 to 180
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+172:             <span>Active Workspace: <strong className="text-[var(--text-main)]">{summary.course_title}</strong></span>
+173:             <span>•</span>
+174:             <span className="inline-flex items-center gap-1 font-mono text-[var(--primary)] font-bold px-2 py-0.5 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/30">
+175:               <Calendar className="w-3 h-3" />
+176:               <span>Target Final Exam: {summary.exam?.date ? `${summary.exam.date} (${summary.exam.days_left}d left)` : `${summary.exam?.days_left ?? 14} days left`}</span>
+177:             </span>
+178:           </p>
+179:         </div>
+180: 
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

@@ -1,0 +1,30 @@
+[
+  {
+    "start": 120.0,
+    "end": 210.0,
+    "timestamp_start": "02:00",
+    "timestamp_end": "03:30",
+    "text": "Welcome to Lecture 4 on Searching and Sorting. In an array of size n, linear search takes O(n) time because in the worst case we inspect every single element."
+  },
+  {
+    "start": 762.0,
+    "end": 798.0,
+    "timestamp_start": "12:42",
+    "timestamp_end": "13:18",
+    "text": "Binary search works by maintaining low and high bounds on a sorted array. At each iteration, we calculate mid = low + (high - low) / 2 and eliminate half of the remaining elements. Thus the runtime is strictly O(log n) compared to linear search which takes O(n)."
+  },
+  {
+    "start": 1140.0,
+    "end": 1250.0,
+    "timestamp_start": "19:00",
+    "timestamp_end": "20:50",
+    "text": "Now let's examine Binary Search Trees. In a BST, every node in the left subtree has a value strictly less than the root, and every node in the right subtree is greater. In-order traversal visits nodes in sorted ascending order."
+  },
+  {
+    "start": 1820.0,
+    "end": 1940.0,
+    "timestamp_start": "30:20",
+    "timestamp_end": "32:20",
+    "text": "Graph traversals differ from tree traversals because graphs can contain cycles. Breadth-First Search (BFS) uses a FIFO queue to discover shortest paths in unweighted graphs, while Depth-First Search (DFS) uses a recursion call stack exploring as deep as possible along each branch."
+  }
+]
