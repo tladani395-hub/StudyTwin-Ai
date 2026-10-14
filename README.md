@@ -186,3 +186,4 @@ Aanvi is engineered with strict privacy-by-design:
 ---
 
 ## 👥 Hackathon Team & Acknowledgements
+- Built with ❤️ for the **Multimodal AI Hackathon 2026 (Track D: Personalized Tutoring & Adaptive Learning)**.
